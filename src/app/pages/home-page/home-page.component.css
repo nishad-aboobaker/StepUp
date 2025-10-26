@@ -1,3 +1,4 @@
+
 .hero-container {
   display: flex;
   align-items: center;
@@ -240,4 +241,12 @@
   .hero-buttons {
     justify-content: center;
   }
+}
+:host ::-webkit-scrollbar {
+  display: none;
+}
+
+:host {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
