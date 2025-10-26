@@ -6,6 +6,8 @@ import { AuthModule } from './features/auth/auth.module';
 import { PagesModule } from './pages/pages.module';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SharedModule } from './shared/shared.module';
+import { CartModule } from './features/cart/cart.module';
+import { CheckoutModule } from './features/checkout/checkout.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,10 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     AuthModule,
     PagesModule,
-    
+    CartModule,
+    SharedModule,
+    CheckoutModule,
+    AppRoutingModule   
   ],
   providers: [],
   bootstrap: [AppComponent]
