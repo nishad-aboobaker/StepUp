@@ -1,13 +1,14 @@
 .footer {
   background-color: #212529;
   color: #fff;
-  padding: 3em 0;
+  padding: 1.5em 0 1em;
   font-family: 'Arial', sans-serif;
 }
 
 .footer-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 4em;
   flex-wrap: wrap;
   max-width: 1200px;
   margin: 0 auto;
@@ -16,19 +17,22 @@
 
 .footer-section {
   flex: 1;
-  min-width: 250px;
-  margin: 1em;
+  min-width: 220px;
+  margin: 0;
+  text-align: center;
 }
 
 .footer-section h3 {
-  font-size: 1.5em;
-  margin-bottom: 1em;
+  font-size: 1.2em;
+  margin-bottom: 0.8em;
   font-weight: 600;
 }
 
 .footer-section p {
   color: #adb5bd;
-  line-height: 1.6;
+  line-height: 1.5;
+  font-size: 0.9em;
+  margin-bottom: 0.8em;
 }
 
 .footer-section.links ul {
@@ -37,13 +41,14 @@
 }
 
 .footer-section.links ul li {
-  margin-bottom: 0.5em;
+  margin-bottom: 0.4em;
 }
 
 .footer-section.links a {
   color: #adb5bd;
   text-decoration: none;
   transition: color 0.3s;
+  font-size: 0.9em;
 }
 
 .footer-section.links a:hover {
@@ -52,8 +57,8 @@
 
 .social-icons a {
   color: #adb5bd;
-  margin-right: 1em;
-  font-size: 1.5em;
+  margin: 0 0.7em;
+  font-size: 1.3em;
   text-decoration: none;
   transition: color 0.3s;
 }
@@ -64,16 +69,20 @@
 
 .newsletter-form {
   display: flex;
-  margin-top: 1em;
+  margin-top: 0.8em;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .newsletter-form input {
   flex-grow: 1;
-  padding: 0.8em;
+  padding: 0.7em;
   border: 1px solid #343a40;
   background-color: #343a40;
   color: #fff;
   border-radius: 5px 0 0 5px;
+  font-size: 0.9em;
 }
 
 .newsletter-form input::placeholder {
@@ -81,7 +90,7 @@
 }
 
 .newsletter-form button {
-  padding: 0.8em 1.2em;
+  padding: 0.7em 1em;
   background-color: #495057;
   color: #fff;
   border: 1px solid #495057;
@@ -89,6 +98,7 @@
   cursor: pointer;
   font-weight: 600;
   transition: background-color 0.3s, border-color 0.3s;
+  font-size: 0.9em;
 }
 
 .newsletter-form button:hover {
@@ -99,11 +109,32 @@
 .footer-bottom {
   text-align: center;
   padding: 1em 0;
-  margin-top: 2em;
+  margin-top: 1.5em;
   border-top: 1px solid #343a40;
 }
 
 .footer-bottom p {
   margin: 0;
   color: #6c757d;
+  font-size: 0.9em;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 2em 1em;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    gap: 2em;
+    text-align: center;
+  }
+
+  .footer-section {
+    min-width: auto;
+  }
+
+  .newsletter-form {
+    max-width: none;
+  }
 }
