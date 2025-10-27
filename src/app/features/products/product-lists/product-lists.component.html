@@ -1,14 +1,18 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-4" *ngFor="let product of products">
-      <div class="card product-card">
-        <img [src]="product.thumbnail" class="card-img-top" [alt]="product.name">
-        <div class="card-body">
-          <h5 class="card-title">{{ product.name }}</h5>
-          <p class="card-text">{{ product.brand }}</p>
-          <a href="#" class="btn btn-primary">View Product</a>
-        </div>
-      </div>
+<div class="product-grid">
+  <div class="product-card" *ngFor="let product of products">
+    <img [src]="product.thumbnail" class="product-image" [alt]="product.name">
+    <div class="product-details">
+      <h2 class="product-name">{{ product.name }}</h2>
+      <p class="shipping-info">Shipped in 3-4 days</p>
+      <div class="price">$35.99</div>
+    </div>
+    <div class="product-actions">
+      <button class="add-cart-btn">
+        <i class="fas fa-shopping-cart"></i> Add Cart
+      </button>
+      <button class="buy-btn">
+        <i class="fas fa-shopping-bag"></i> Buy
+      </button>
     </div>
   </div>
 </div>
