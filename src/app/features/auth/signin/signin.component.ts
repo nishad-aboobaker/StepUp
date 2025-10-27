@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-signin',
@@ -6,5 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent {
+  credentials = {
+    email: '',
+    password: ''
+  };
 
+  constructor(private auth: AuthService) {}
+
+  onLogin() {
+    this.auth.login(this.credentials);
+  }
 }

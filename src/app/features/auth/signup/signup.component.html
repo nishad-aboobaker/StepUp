@@ -2,20 +2,20 @@
 <div class="signup-container">
   <div class="signup-form">
     <h2>Create Account</h2>
-    <form>
+    <form (ngSubmit)="onSignup()" #signupForm="ngForm">
       <div class="form-group">
         <label for="name">Name</label>
-        <input type="text" id="name" placeholder="Enter your name">
+        <input type="text" id="name" placeholder="Enter your name" [(ngModel)]="user.name" name="name" required>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Enter your email">
+        <input type="email" id="email" placeholder="Enter your email" [(ngModel)]="user.email" name="email" required>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Create a password">
+        <input type="password" id="password" placeholder="Create a password" [(ngModel)]="user.password" name="password" required>
       </div>
-      <button type="submit" class="signup-button">Sign Up</button>
+      <button type="submit" class="signup-button" [disabled]="!signupForm.valid">Sign Up</button>
     </form>
     <div class="signin-link">
       <p>Already have an account? <a routerLink="/auth/signin">Sign in</a></p>

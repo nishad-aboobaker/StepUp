@@ -22,7 +22,7 @@ import { CheckoutModule } from './features/checkout/checkout.module';
     CartModule,
     SharedModule,
     CheckoutModule,
-    AppRoutingModule   
+    AppRoutingModule  
   ],
   providers: [],
   bootstrap: [AppComponent]
