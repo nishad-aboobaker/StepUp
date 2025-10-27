@@ -20,6 +20,12 @@ const routes: Routes = [
         (m) => m.CartRoutingModule
       ),
   },
+  {path:'products',
+  loadChildren:()=>
+  import('./features/products/products-routing.module').then(
+    (m)=>m.ProductsRoutingModule
+  )
+},
   { path: '**', component: NotFoundComponent },
 ];
 
