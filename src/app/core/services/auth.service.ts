@@ -43,7 +43,8 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('loggedInUser');
-    this.router.navigate(['/auth/signin']);
+    alert('Logged out successfully!'); 
+    this.router.navigate(['']);
   }
 
   isLoggedIn(): boolean {
@@ -52,5 +53,12 @@ export class AuthService {
 
   getCurrentUser(): any {
     return JSON.parse(localStorage.getItem('loggedInUser') || 'null');
+  }
+
+  isAuthenticated(): boolean {
+    if(localStorage.getItem('loggedInUser')){
+      return true;
+    }
+    return false;
   }
 }

@@ -2,16 +2,47 @@
   <div class="logo">
     <a routerLink="">StepUp</a>
   </div>
-  <ul class="categories">
-    <li><a routerLink="">Men</a></li>
-    <li><a routerLink="">Women</a></li>
-    <li><a routerLink="">Kids</a></li>
-    <li><a routerLink="">Sports</a></li>
-  </ul>
+
+  <ng-container *ngIf="this.auth.isAuthenticated(); then authenticatedlinks"> </ng-container> 
+
+  <ng-template #authenticatedlinks>
+    <ul class="categories">
+      <li><a routerLink="">Men</a></li>
+      <li><a routerLink="">Women</a></li>
+      <li><a routerLink="">Kids</a></li>
+      <li><a routerLink="">Sports</a></li>
+    </ul>
+  </ng-template>
+
   <div class="actions">
     <a routerLink="/cart" class="icon-link">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <path d="M16 10a4 4 0 0 1-8 0"></path>
+      </svg>
     </a>
-    <button class="login-button"  routerLink="/auth/signin">Login</button>
+
+    <ng-container *ngIf="this.auth.isAuthenticated(); then authenticatedbtns; else unauthenticatedbtns"> 
+
+    </ng-container>
+
+    <ng-template #unauthenticatedbtns>
+      <button class="login-button" routerLink="/auth/signin">Login</button>
+    </ng-template>
+    <ng-template #authenticatedbtns>
+      <button class="login-button" (click)="logout()">Logout</button>
+    </ng-template>
+      
   </div>
 </nav>
