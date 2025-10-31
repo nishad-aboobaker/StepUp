@@ -164,7 +164,7 @@
         .add-to-cart-btn {
             width: 100%;
             padding: 1rem;
-            background-color: var(--primary-color);
+            background-color: gray;
             color: white;
             border: none;
             border-radius: var(--border-radius);
