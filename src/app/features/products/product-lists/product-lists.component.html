@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<div class="product-grid">
+<!-- <div class="product-grid">
   <div class="product-card" *ngFor="let product of filteredProducts">
     
     <img src={{product.thumbnail}} class="product-image" alt={{product.name}}>
@@ -24,9 +24,25 @@
   </div>
 </div>
 
+ -->
 
 
-
+  <div class="product-container">
+    <div class="product-card" *ngFor="let product of filteredProducts">
+      <img src={{product.thumbnail}} alt={{product.name}} class="product-image" />
+      <div class="product-info">
+        <p class="product-category">{{product.category}}</p>
+        <h3>{{product.name}}</h3>
+        <div class="rating">
+          <span>⭐ {{product.rating}}</span>
+        </div>
+        <div class="price-add">
+          <p class="price">${{product.price}}</p>
+          <button class="add-to-cart">🛒 Add</button>
+        </div>
+      </div>
+    </div>
+    </div>
 
 
 
