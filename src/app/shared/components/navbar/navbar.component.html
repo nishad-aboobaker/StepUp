@@ -3,16 +3,12 @@
     <a routerLink="">StepUp</a>
   </div>
 
-  <ng-container *ngIf="this.auth.isAuthenticated(); then authenticatedlinks"> </ng-container> 
-
-  <ng-template #authenticatedlinks>
     <ul class="categories">
       <li><a routerLink="">Men</a></li>
       <li><a routerLink="">Women</a></li>
       <li><a routerLink="">Kids</a></li>
       <li><a routerLink="">Sports</a></li>
     </ul>
-  </ng-template>
 
   <div class="actions">
     <a routerLink="/cart" class="icon-link">
