@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../core/services/products.service';
 
 @Component({
@@ -7,11 +8,28 @@ import { ProductsService } from '../../../core/services/products.service';
   styleUrls: ['./product-lists.component.css']
 })
 export class ProductListsComponent implements OnInit {
-  products: any[] = [];
 
-  constructor(private productsService: ProductsService) { }
+  allProducts: any[] = [];
+  filteredProducts: any[] = [];
+
+  constructor(
+    private productsService: ProductsService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.products = this.productsService.products;
+    this.allProducts = this.productsService.products;
+
+    this.route.paramMap.subscribe(params => {
+      const category = params.get('category');
+
+      if (category) {
+        this.filteredProducts = this.allProducts.filter(
+          (p: any) => p.category.toLowerCase() === category.toLowerCase()
+        );
+      } else {
+        this.filteredProducts = this.allProducts;
+      }
+    });
   }
 }
