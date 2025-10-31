@@ -1,4 +1,4 @@
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
 
 .product-grid {
   display: grid;
@@ -9,12 +9,13 @@
   margin: 15px auto;
 }
 
-
 .product-container {
   display: flex;
   justify-content: center;
   gap: 2em;
   flex-wrap: wrap;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .product-card {
@@ -42,7 +43,6 @@
   flex-grow: 1;
 }
 
-
 .product-category {
   color: #6c757d;
   font-size: 0.8em;
@@ -53,6 +53,9 @@
   font-size: 1.2em;
   font-weight: 600;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .rating {
