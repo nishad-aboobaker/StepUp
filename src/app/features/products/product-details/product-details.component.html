@@ -1,11 +1,65 @@
-<div class="product-details-container">
-  <div class="product-image">
-    <img src="{{ product.thumbnail }}" alt="{{ product.name }}">
-  </div>
-  <div class="product-info">
-    <h2>{{ product.name }}</h2>
-    <p class="price">{{ product.price | currency }}</p>
-    <p class="description">{{ product.description }}</p>
-    <button class="add-to-cart-btn">Add to Cart</button>
-  </div>
-</div>  
+
+<app-navbar></app-navbar>
+
+
+
+<div class="product-container">
+        <section class="product-gallery">
+            <div class="main-image">
+                <img src="{{product.thumbnail}}" alt="Main product image of a red running shoe">
+            </div>
+            <div class="thumbnail-images">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop" alt="Thumbnail 1" class="active">
+                <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop" alt="Thumbnail 2">
+                <img src="https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?q=80&w=2070&auto=format&fit=crop" alt="Thumbnail 3">
+                <img src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=1898&auto=format&fit=crop" alt="Thumbnail 4">
+            </div>
+        </section>
+
+        <section class="product-details">
+            <p class="product-category">{{ product.catpgory }}</p>
+            <h1 class="product-title">{{ product.name }}</h1>
+            <p class="product-price">${{product.price}}</p>
+            <p class="product-description">{{product.description}}</p>
+
+            <div class="options-group">
+                <h3>Color</h3>
+                <div class="color-options">
+                    <div class="color-swatch active" style="background-color: #d90429;"></div>
+                    <div class="color-swatch" style="background-color: #000000;"></div>
+                    <div class="color-swatch" style="background-color: #f1faee;"></div>
+                    <div class="color-swatch" style="background-color: #457b9d;"></div>
+                </div>
+            </div>
+
+            <div class="options-group">
+                <h3>Size (US)</h3>
+                <div class="size-options">
+                    <button class="size-button">8</button>
+                    <button class="size-button">9</button>
+                    <button class="size-button active">10</button>
+                    <button class="size-button">11</button>
+                    <button class="size-button">12</button>
+                </div>
+            </div>
+            
+            <div class="info-accordion">
+                 <details>
+                    <summary>Product Details</summary>
+                    <div class="details-content">
+                        <p>Upper: Breathable Knit Mesh<br>Midsole: Ultra-Cushion Foam<br>Outsole: High-Traction Rubber</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Shipping & Returns</summary>
+                    <div class="details-content">
+                        <p>Free standard shipping on all orders. Returns are accepted within 30 days of purchase. Please see our full policy for details.</p>
+                    </div>
+                </details>
+            </div>
+
+            <button class="add-to-cart-btn">Add to Cart</button>
+        </section>
+    </div>
+
+<app-footer></app-footer>
