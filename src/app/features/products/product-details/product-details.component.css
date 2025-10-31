@@ -1,0 +1,62 @@
+/* General styles */
+.product-details-container {
+  display: flex;
+  margin: 20px;
+}
+
+.product-image {
+  flex: 1;
+  padding-right: 20px;
+}
+
+.product-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.product-info {
+  flex: 2;
+}
+
+.price {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+}
+
+.description {
+  margin-top: 10px;
+}
+
+.add-to-cart-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Reviews section */
+.reviews-section {
+  margin: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+}
+
+.review {
+  margin-bottom: 15px;
+}
+
+.review-author {
+  font-weight: bold;
+}
+
+.review-text {
+  margin-top: 5px;
+}
