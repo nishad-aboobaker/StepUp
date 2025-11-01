@@ -47,6 +47,7 @@
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <path d="M16 10a4 4 0 0 1-8 0"></path>
         </svg>
+        <span *ngIf="totalQty > 0" class="cart-badge">{{ totalQty }}</span>
         Cart
       </a>
 
@@ -116,6 +117,7 @@
         <line x1="3" y1="6" x2="21" y2="6"></line>
         <path d="M16 10a4 4 0 0 1-8 0"></path>
       </svg>
+      <span *ngIf="totalQty > 0" class="cart-badge">{{ totalQty }}</span>
     </a>
 
     <a routerLink="/orders" class="icon-link">

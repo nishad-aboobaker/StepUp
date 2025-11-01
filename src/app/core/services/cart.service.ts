@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { AuthService } from './auth.service';
 
 export interface CartItem {
@@ -18,7 +19,16 @@ export interface CartItem {
   providedIn: 'root',
 })
 export class CartService {
-  constructor(private authService: AuthService) {}
+  private cartSubject = new BehaviorSubject<CartItem[]>([]);
+  public cart$ = this.cartSubject.asObservable();
+
+  constructor(private authService: AuthService) {
+    this.updateCartSubject();
+  }
+
+  private updateCartSubject() {
+    this.cartSubject.next(this.getCart());
+  }
 
   // Get the cart key based on authentication status
   private getCartKey(): string {
@@ -39,6 +49,7 @@ export class CartService {
   // ✅ Save cart to localStorage
   saveCart(cart: CartItem[]) {
     localStorage.setItem(this.getCartKey(), JSON.stringify(cart));
+    this.updateCartSubject();
   }
 
   // ✅ Add a product to cart
@@ -92,5 +103,11 @@ export class CartService {
       (sum: number, item: CartItem) => sum + item.price * item.qty,
       0
     );
+  }
+
+  // ✅ Calculate total quantity
+  getTotalQty() {
+    let cart = this.getCart();
+    return cart.reduce((sum: number, item: CartItem) => sum + item.qty, 0);
   }
 }
