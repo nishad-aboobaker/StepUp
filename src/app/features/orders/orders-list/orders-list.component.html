@@ -1,1 +1,63 @@
-<p>orders-list works!</p>
+<app-navbar></app-navbar>
+
+<div class="orders-container">
+  <h1>Your Orders</h1>
+
+  <div class="orders-list" *ngIf="orders.length; else noOrders">
+    <div class="order-card" *ngFor="let order of orders">
+      <div class="order-header">
+        <h3>Order #{{ order.id }}</h3>
+        <span class="order-status" [class]="'status-' + order.status">{{
+          order.status
+        }}</span>
+      </div>
+
+      <div class="order-date">
+        <p>Ordered on: {{ order.orderDate | date : "medium" }}</p>
+      </div>
+
+      <div class="order-items">
+        <div class="order-item" *ngFor="let item of order.items">
+          <img
+            [src]="item.thumbnail"
+            alt="{{ item.name }}"
+            class="item-image"
+          />
+          <div class="item-details">
+            <h4>{{ item.name }}</h4>
+            <p>Qty: {{ item.qty }}</p>
+            <p class="price">₹{{ item.price * item.qty }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-total">
+        <p>
+          <strong>Total: ₹{{ order.total }}</strong>
+        </p>
+      </div>
+
+      <div class="shipping-info">
+        <h4>Shipping Address:</h4>
+        <p>{{ order.shippingAddress.name }}</p>
+        <p>{{ order.shippingAddress.address }}</p>
+        <p>{{ order.shippingAddress.city }}, {{ order.shippingAddress.zip }}</p>
+        <p>{{ order.shippingAddress.email }}</p>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noOrders>
+    <div class="no-orders">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png"
+        alt="orders-icon"
+      />
+      <h2>No orders yet</h2>
+      <p>You haven't placed any orders yet.</p>
+      <button routerLink="/products" class="shop-btn">Start Shopping</button>
+    </div>
+  </ng-template>
+</div>
+
+<app-footer></app-footer>
