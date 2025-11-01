@@ -1,0 +1,33 @@
+<div class="modal-overlay" *ngIf="true">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Payment Confirmed!</h2>
+    </div>
+    <div class="modal-body">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="#4CAF50"
+            stroke-width="2"
+            fill="#4CAF50"
+          />
+          <path
+            d="M8 12l2 2 4-4"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+      <p>Your payment has been processed successfully.</p>
+      <p>Thank you for your purchase!</p>
+    </div>
+    <div class="modal-footer">
+      <button class="close-btn" (click)="onClose()">Continue Shopping</button>
+    </div>
+  </div>
+</div>

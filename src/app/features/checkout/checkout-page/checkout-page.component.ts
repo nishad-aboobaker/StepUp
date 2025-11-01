@@ -20,6 +20,13 @@ export class CheckoutPageComponent implements OnInit {
     city: '',
     zip: '',
   };
+  paymentForm = {
+    cardNumber: '',
+    expiryDate: '',
+    cvv: '',
+  };
+  showPaymentModal = false;
+  isProcessing = false;
 
   constructor(
     private cartService: CartService,
@@ -68,17 +75,34 @@ export class CheckoutPageComponent implements OnInit {
       return;
     }
 
-    try {
-      const order: Order = this.ordersService.placeOrder(
-        this.cartItems,
-        this.shippingForm
-      );
-      this.cartService.saveCart([]); // Clear the cart
-      this.toastr.success('Order placed successfully!');
-      this.router.navigate(['/orders']);
-    } catch (error) {
-      this.toastr.error('Failed to place order. Please try again.');
-    }
+    // Start processing
+    this.isProcessing = true;
+
+    // Simulate payment processing
+    this.processPayment();
+  }
+
+  processPayment() {
+    // Simulate payment processing delay
+    setTimeout(() => {
+      try {
+        const order: Order = this.ordersService.placeOrder(
+          this.cartItems,
+          this.shippingForm
+        );
+        this.cartService.saveCart([]); // Clear the cart
+        this.isProcessing = false;
+        this.showPaymentModal = true;
+      } catch (error) {
+        this.isProcessing = false;
+        this.toastr.error('Failed to place order. Please try again.');
+      }
+    }, 2000); // 2 second delay to simulate processing
+  }
+
+  onModalClose() {
+    this.showPaymentModal = false;
+    this.router.navigate(['/products']);
   }
 
   isFormValid(): boolean {
@@ -87,7 +111,30 @@ export class CheckoutPageComponent implements OnInit {
       this.shippingForm.email &&
       this.shippingForm.address &&
       this.shippingForm.city &&
-      this.shippingForm.zip
+      this.shippingForm.zip &&
+      this.paymentForm.cardNumber &&
+      this.paymentForm.expiryDate &&
+      this.paymentForm.cvv
     );
+  }
+
+  isPaymentFormValid(): boolean {
+    return !!(
+      this.paymentForm.cardNumber &&
+      this.paymentForm.expiryDate &&
+      this.paymentForm.cvv
+    );
+  }
+
+  getCardType(): string {
+    const cardNumber = this.paymentForm.cardNumber.replace(/\s/g, '');
+    if (/^4/.test(cardNumber)) {
+      return 'visa';
+    } else if (/^5[1-5]/.test(cardNumber) || /^2[2-7]/.test(cardNumber)) {
+      return 'mastercard';
+    } else if (/^3[47]/.test(cardNumber)) {
+      return 'amex';
+    }
+    return '';
   }
 }
