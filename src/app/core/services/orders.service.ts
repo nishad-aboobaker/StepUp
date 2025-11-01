@@ -37,7 +37,12 @@ export class OrdersService {
   // Get orders from localStorage
   getOrders(): Order[] {
     const data = localStorage.getItem(this.getOrdersKey());
-    return data ? JSON.parse(data) : [];
+    const orders = data ? JSON.parse(data) : [];
+    // Sort orders by orderDate descending (latest first)
+    return orders.sort(
+      (a: Order, b: Order) =>
+        new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()
+    );
   }
 
   // Save orders to localStorage
