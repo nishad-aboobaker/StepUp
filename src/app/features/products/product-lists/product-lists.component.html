@@ -39,6 +39,19 @@
       </div>
     </div>
   </div>
+
+  <!-- No items found message -->
+  <div
+    class="no-items"
+    *ngIf="filteredProducts.length === 0 && searchTerm.trim()"
+  >
+    <img
+      src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png"
+      alt="no-items-icon"
+    />
+    <h2>No items found</h2>
+    <p>Try adjusting your search to find what you're looking for.</p>
+  </div>
 </div>
 
 <!-- Pagination Controls -->
