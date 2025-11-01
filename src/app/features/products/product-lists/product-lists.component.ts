@@ -16,6 +16,7 @@ export class ProductListsComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalPages: number = 0;
+  searchTerm: string = '';
 
   constructor(
     private productsService: ProductsService,
@@ -26,19 +27,33 @@ export class ProductListsComponent implements OnInit {
 
   ngOnInit(): void {
     this.allProducts = this.productsService.products;
+    this.filterProducts();
+  }
 
-    this.route.paramMap.subscribe((params) => {
-      const category = params.get('category');
+  filterProducts() {
+    let filtered = this.allProducts;
 
-      if (category) {
-        this.filteredProducts = this.allProducts.filter(
-          (p: any) => p.category.toLowerCase() === category.toLowerCase()
-        );
-      } else {
-        this.filteredProducts = this.allProducts;
-      }
-      this.updatePagination();
-    });
+    // Filter by category if present
+    const category = this.route.snapshot.paramMap.get('category');
+    if (category) {
+      filtered = filtered.filter(
+        (p: any) => p.category.toLowerCase() === category.toLowerCase()
+      );
+    }
+
+    // Filter by search term
+    if (this.searchTerm.trim()) {
+      const term = this.searchTerm.toLowerCase();
+      filtered = filtered.filter(
+        (p: any) =>
+          p.name.toLowerCase().includes(term) ||
+          p.brand.toLowerCase().includes(term) ||
+          p.category.toLowerCase().includes(term)
+      );
+    }
+
+    this.filteredProducts = filtered;
+    this.updatePagination();
   }
 
   updatePagination() {

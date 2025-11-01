@@ -1,5 +1,16 @@
 <app-navbar></app-navbar>
 
+<!-- Search Bar -->
+<div class="search-container">
+  <input
+    type="text"
+    placeholder="Search products by name, brand, or category..."
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="filterProducts()"
+    class="search-input"
+  />
+</div>
+
 <div class="product-container">
   <div
     class="product-card"
