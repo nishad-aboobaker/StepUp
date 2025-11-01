@@ -1,7 +1,5 @@
 <app-navbar></app-navbar>
 
-
-
 <div class="product-container">
   <div
     class="product-card"
@@ -21,7 +19,12 @@
       </div>
       <div class="price-add">
         <p class="price">${{ product.price }}</p>
-        <button class="add-to-cart">🛒 Add</button>
+        <button
+          class="add-to-cart"
+          (click)="addToCart(product); $event.stopPropagation()"
+        >
+          🛒 Add
+        </button>
       </div>
     </div>
   </div>

@@ -3,12 +3,12 @@
     <a routerLink="">stepUP</a>
   </div>
 
-    <ul class="categories">
-      <li><a routerLink="/products/men">Men</a></li>
-      <li><a routerLink="/products/women">Women</a></li>
-      <li><a routerLink="/products/kids">Kids</a></li>
-      <li><a routerLink="/products/sports">Sports</a></li>
-    </ul>
+  <ul class="categories">
+    <li><a routerLink="/products/men">Men</a></li>
+    <li><a routerLink="/products/women">Women</a></li>
+    <li><a routerLink="/products/kids">Kids</a></li>
+    <li><a routerLink="/products/sports">Sports</a></li>
+  </ul>
 
   <div class="actions">
     <a routerLink="/cart" class="icon-link">
@@ -29,8 +29,13 @@
       </svg>
     </a>
 
-    <ng-container *ngIf="this.auth.isAuthenticated(); then authenticatedbtns; else unauthenticatedbtns"> 
-
+    <ng-container
+      *ngIf="
+        auth.isAuthenticated();
+        then authenticatedbtns;
+        else unauthenticatedbtns
+      "
+    >
     </ng-container>
 
     <ng-template #unauthenticatedbtns>
@@ -39,6 +44,5 @@
     <ng-template #authenticatedbtns>
       <button class="login-button" (click)="logout()">Logout</button>
     </ng-template>
-      
   </div>
 </nav>

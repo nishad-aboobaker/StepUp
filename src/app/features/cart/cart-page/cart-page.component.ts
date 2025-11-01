@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService, CartItem } from '../../../core/services/cart.service'; // ✅ IMPORT THIS
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart-page',
@@ -11,8 +12,13 @@ export class CartPageComponent implements OnInit {
 
   cartItems: CartItem[] = [];
   total = 0;
+  showModal = false;
+  itemToRemove: number | null = null;
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     this.loadCart();
@@ -34,7 +40,22 @@ export class CartPageComponent implements OnInit {
   }
 
   remove(id: number) {
-    this.cartService.removeFromCart(id);
-    this.loadCart();
+    this.itemToRemove = id;
+    this.showModal = true;
+  }
+
+  confirmRemove() {
+    if (this.itemToRemove !== null) {
+      this.cartService.removeFromCart(this.itemToRemove);
+      this.loadCart();
+      this.toastr.success('Item removed from cart!');
+    }
+    this.showModal = false;
+    this.itemToRemove = null;
+  }
+
+  cancelRemove() {
+    this.showModal = false;
+    this.itemToRemove = null;
   }
 }

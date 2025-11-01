@@ -1,20 +1,15 @@
 <app-navbar></app-navbar>
 <div class="cart-container" *ngIf="cartItems.length; else emptyCart">
-  
   <h1 class="cart-title">Your Cart</h1>
 
   <div class="cart-content">
-
->
     <div class="cart-items">
       <div class="cart-item" *ngFor="let item of cartItems">
-        
-        <img class="item-image" [src]="item.thumbnail" alt="{{ item.name }}">
+        <img class="item-image" [src]="item.thumbnail" alt="{{ item.name }}" />
 
         <div class="item-info">
           <h3>{{ item.name }}</h3>
           <p class="item-price">₹{{ item.price }}</p>
-
 
           <div class="qty-controls">
             <button (click)="decrease(item.id)">-</button>
@@ -22,14 +17,10 @@
             <button (click)="increase(item.id)">+</button>
           </div>
 
-          <button class="remove-btn" (click)="remove(item.id)">
-            Remove
-          </button>
+          <button class="remove-btn" (click)="remove(item.id)">Remove</button>
         </div>
       </div>
     </div>
-
-
 
     <div class="cart-summary">
       <h2>Order Summary</h2>
@@ -49,21 +40,32 @@
         <span>₹{{ total }}</span>
       </div>
 
-      <button class="checkout-btn">
-        Proceed to Checkout
-      </button>
+      <button class="checkout-btn">Proceed to Checkout</button>
     </div>
-
   </div>
 </div>
 
-
-
 <ng-template #emptyCart>
   <div class="empty-cart">
-    <img src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png" alt="cart-icon"/>
+    <img
+      src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png"
+      alt="cart-icon"
+    />
     <h2>Your cart is empty</h2>
-    <a routerLink="/products" class="shop-btn">Start Shopping</a>
+    <button routerLink="/products" class="shop-btn">Start Shopping</button>
   </div>
 </ng-template>
+
+<!-- Custom Confirm Modal -->
+<div class="modal-overlay" *ngIf="showModal" (click)="cancelRemove()">
+  <div class="modal-dialog" (click)="$event.stopPropagation()">
+    <h3>Confirm Removal</h3>
+    <p>Are you sure you want to remove this item from your cart?</p>
+    <div class="modal-actions">
+      <button class="cancel-btn" (click)="cancelRemove()">Cancel</button>
+      <button class="confirm-btn" (click)="confirmRemove()">Remove</button>
+    </div>
+  </div>
+</div>
+
 <app-footer></app-footer>

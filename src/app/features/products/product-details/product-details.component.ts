@@ -5,6 +5,7 @@ import {
   Product,
 } from '../../../core/services/products.service';
 import { CartService, CartItem } from '../../../core/services/cart.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-details',
@@ -17,7 +18,8 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
     private route: ActivatedRoute,
-    private cartService: CartService
+    private cartService: CartService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +39,7 @@ export class ProductDetailsComponent implements OnInit {
   addToCart() {
     if (this.product) {
       this.cartService.addToCart(this.product as CartItem);
-      alert('Added to cart!');
+      this.toastr.success('Added to cart!');
     }
   }
 }

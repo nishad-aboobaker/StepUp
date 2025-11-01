@@ -6,34 +6,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
-import { AuthModule } from './features/auth/auth.module';
+import { FeaturesModule } from './features/features.module';
 import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
-import { CartModule } from './features/cart/cart.module';
-import { CheckoutModule } from './features/checkout/checkout.module';
 
 import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NotFoundComponent
-  ],
+  declarations: [AppComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    AuthModule,
+    FeaturesModule,
     PagesModule,
     SharedModule,
-    CartModule,
-    CheckoutModule,
-    ToastrModule.forRoot(
-      { positionClass: 'toast-top-right',
-       timeOut: 1500}
-    ),     
+    ToastrModule.forRoot({ positionClass: 'toast-top-right', timeOut: 1500 }),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
