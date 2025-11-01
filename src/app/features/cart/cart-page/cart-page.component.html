@@ -1,2 +1,69 @@
 <app-navbar></app-navbar>
-<h1>hellooooo</h1>
+<div class="cart-container" *ngIf="cartItems.length; else emptyCart">
+  
+  <h1 class="cart-title">Your Cart</h1>
+
+  <div class="cart-content">
+
+>
+    <div class="cart-items">
+      <div class="cart-item" *ngFor="let item of cartItems">
+        
+        <img class="item-image" [src]="item.thumbnail" alt="{{ item.name }}">
+
+        <div class="item-info">
+          <h3>{{ item.name }}</h3>
+          <p class="item-price">₹{{ item.price }}</p>
+
+
+          <div class="qty-controls">
+            <button (click)="decrease(item.id)">-</button>
+            <span>{{ item.qty }}</span>
+            <button (click)="increase(item.id)">+</button>
+          </div>
+
+          <button class="remove-btn" (click)="remove(item.id)">
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="cart-summary">
+      <h2>Order Summary</h2>
+
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span>₹{{ total }}</span>
+      </div>
+
+      <div class="summary-row">
+        <span>Shipping</span>
+        <span>Free</span>
+      </div>
+
+      <div class="summary-row total">
+        <span>Total</span>
+        <span>₹{{ total }}</span>
+      </div>
+
+      <button class="checkout-btn">
+        Proceed to Checkout
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+
+<ng-template #emptyCart>
+  <div class="empty-cart">
+    <img src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png" alt="cart-icon"/>
+    <h2>Your cart is empty</h2>
+    <a routerLink="/products" class="shop-btn">Start Shopping</a>
+  </div>
+</ng-template>
+<app-footer></app-footer>
