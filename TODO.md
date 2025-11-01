@@ -1,5 +1,0 @@
-- [x] Add getTotalQty() method and BehaviorSubject reactivity to CartService
-- [x] Update NavbarComponent to subscribe to cart changes and compute totalQty
-- [x] Update navbar.component.html to display qty badges next to cart icons
-- [x] Add CSS styling for qty badges in navbar.component.css
-- [x] Test the app for qty updates
