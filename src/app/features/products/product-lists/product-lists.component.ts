@@ -12,6 +12,10 @@ import { ToastrService } from 'ngx-toastr';
 export class ProductListsComponent implements OnInit {
   allProducts: any[] = [];
   filteredProducts: any[] = [];
+  paginatedProducts: any[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalPages: number = 0;
 
   constructor(
     private productsService: ProductsService,
@@ -33,7 +37,43 @@ export class ProductListsComponent implements OnInit {
       } else {
         this.filteredProducts = this.allProducts;
       }
+      this.updatePagination();
     });
+  }
+
+  updatePagination() {
+    this.totalPages = Math.ceil(
+      this.filteredProducts.length / this.itemsPerPage
+    );
+    this.currentPage = 1;
+    this.paginateProducts();
+  }
+
+  paginateProducts() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedProducts = this.filteredProducts.slice(startIndex, endIndex);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.paginateProducts();
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.paginateProducts();
+    }
+  }
+
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.paginateProducts();
+    }
   }
 
   addToCart(product: any) {
