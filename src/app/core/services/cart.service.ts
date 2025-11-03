@@ -39,20 +39,19 @@ export class CartService {
       return 'cart_items_guest';
     }
   }
-
-  // ✅ Get cart from localStorage
+  //  Get cart from localStorage
   getCart(): CartItem[] {
     const data = localStorage.getItem(this.getCartKey());
     return data ? JSON.parse(data) : [];
   }
 
-  // ✅ Save cart to localStorage
+  //  Save cart to localStorage
   saveCart(cart: CartItem[]) {
     localStorage.setItem(this.getCartKey(), JSON.stringify(cart));
     this.updateCartSubject();
   }
 
-  // ✅ Add a product to cart
+  //  Add a product to cart
   addToCart(product: CartItem) {
     let cart = this.getCart();
 
@@ -67,14 +66,14 @@ export class CartService {
     this.saveCart(cart);
   }
 
-  // ✅ Remove item from cart
+  //   Remove item from cart
   removeFromCart(productId: number) {
     let cart = this.getCart();
     cart = cart.filter((item: CartItem) => item.id !== productId);
     this.saveCart(cart);
   }
 
-  // ✅ Increase quantity
+  //  Increase quantity in cart
   increaseQty(productId: number) {
     let cart = this.getCart();
     const item = cart.find((p: CartItem) => p.id === productId);
@@ -82,7 +81,7 @@ export class CartService {
     this.saveCart(cart);
   }
 
-  // ✅ Decrease quantity
+  //  Decrease quantity in cart
   decreaseQty(productId: number) {
     let cart = this.getCart();
     const item = cart.find((p: CartItem) => p.id === productId);
@@ -96,7 +95,7 @@ export class CartService {
     this.saveCart(cart);
   }
 
-  // ✅ Calculate total price
+  //  Calculate total price of items in cart
   getCartTotal() {
     let cart = this.getCart();
     return cart.reduce(
@@ -105,7 +104,7 @@ export class CartService {
     );
   }
 
-  // ✅ Calculate total quantity
+  // to calclate total quantity of items in cart
   getTotalQty() {
     let cart = this.getCart();
     return cart.reduce((sum: number, item: CartItem) => sum + item.qty, 0);
