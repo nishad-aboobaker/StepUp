@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../core/services/products.service';
 import { CartService, CartItem } from '../../../core/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-lists',
   templateUrl: './product-lists.component.html',
   styleUrls: ['./product-lists.component.css'],
 })
-export class ProductListsComponent implements OnInit {
+export class ProductListsComponent implements OnInit, OnDestroy {
+  private routeSub!: Subscription;
   allProducts: any[] = [];
   filteredProducts: any[] = [];
   paginatedProducts: any[] = [];
@@ -27,7 +29,15 @@ export class ProductListsComponent implements OnInit {
 
   ngOnInit(): void {
     this.allProducts = this.productsService.products;
-    this.filterProducts();
+    this.routeSub = this.route.params.subscribe((params) => {
+      this.filterProducts();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.routeSub) {
+      this.routeSub.unsubscribe();
+    }
   }
 
   filterProducts() {
@@ -46,9 +56,7 @@ export class ProductListsComponent implements OnInit {
       const term = this.searchTerm.toLowerCase();
       filtered = filtered.filter(
         (p: any) =>
-          p.name.toLowerCase().includes(term) ||
-          p.brand.toLowerCase().includes(term) ||
-          p.category.toLowerCase().includes(term)
+          p.name.toLowerCase().startsWith(term)
       );
     }
 

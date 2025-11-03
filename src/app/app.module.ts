@@ -4,22 +4,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NotFoundComponent } from './not-found/not-found.component';
 
-import { FeaturesModule } from './features/features.module';
-import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
 
 import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  declarations: [AppComponent, NotFoundComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    FeaturesModule,
-    PagesModule,
     SharedModule,
     ToastrModule.forRoot({ positionClass: 'toast-top-right', timeOut: 1500 }),
   ],

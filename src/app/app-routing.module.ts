@@ -1,41 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { HomePageComponent } from './pages/home-page/home-page.component';
+import { HomePageComponent } from './shared/pages/home-page/home-page.component';
 
 const routes: Routes = [
   { path: 'home', redirectTo: '', pathMatch: 'full' },
   { path: '', component: HomePageComponent },
   {
-    path: 'auth',
+    path: '',
     loadChildren: () =>
-      import('./features/auth/auth.module').then((m) => m.AuthModule),
+      import('./shared/pages/pages.module').then((m) => m.PagesModule),
   },
   {
-    path: 'cart',
+    path: '',
     loadChildren: () =>
-      import('./features/cart/cart.module').then((m) => m.CartModule),
+      import('./features/features.module').then((m) => m.FeaturesModule),
   },
-  {
-    path: 'checkout',
-    loadChildren: () =>
-      import('./features/checkout/checkout.module').then(
-        (m) => m.CheckoutModule
-      ),
-  },
-  {
-    path: 'orders',
-    loadChildren: () =>
-      import('./features/orders/orders.module').then((m) => m.OrdersModule),
-  },
-  {
-    path: 'products',
-    loadChildren: () =>
-      import('./features/products/products.module').then(
-        (m) => m.ProductsModule
-      ),
-  },
-  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
