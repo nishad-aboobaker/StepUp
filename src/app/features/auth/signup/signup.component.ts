@@ -10,7 +10,8 @@ export class SignupComponent {
   user = {
     name: '',
     email: '',
-    password: ''
+    password: '',
+    role:'user'
   };
 
   constructor(private auth: AuthService) {}

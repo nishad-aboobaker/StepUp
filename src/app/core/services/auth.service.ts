@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -6,7 +7,25 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private router: Router, private toastr: ToastrService) {}
+  constructor(private router: Router, private toastr: ToastrService) {
+    this.ensureAdminExists();
+  }
+
+  ensureAdminExists(): void {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const adminExists = users.some((u: any) => u.role === 'admin');
+
+    if (!adminExists) {
+      const adminUser = {
+        name: 'Admin',
+        email: 'admin@stepup.com',
+        password: 'adminpassword',
+        role: 'admin'
+      };
+      users.push(adminUser);
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+  }
 
   signup(userData: any): boolean {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
@@ -16,7 +35,7 @@ export class AuthService {
       this.toastr.error('User already exists!');
       return false;
     }
-
+    userData.role = "user";
     users.push(userData);
     localStorage.setItem('users', JSON.stringify(users));
     this.toastr.success('Signup successful!');
@@ -32,13 +51,18 @@ export class AuthService {
     );
 
     if (user) {
+       if (!user.role) {
+        user.role = 'user';
+      }
       localStorage.setItem('loggedInUser', JSON.stringify(user));
       this.toastr.success('Login successful!');
 
-      // Transfer guest cart to user cart
-      this.transferGuestCartToUser(user);
-
-      this.router.navigate(['/home']);
+      if (user.role === 'admin') {
+        this.router.navigate(['/dashboard']);
+      } else {
+        this.transferGuestCartToUser(user);
+        this.router.navigate(['']);
+      }
       return true;
     } else {
       this.toastr.error('Invalid credentials');
@@ -54,16 +78,12 @@ export class AuthService {
     const userCart = localStorage.getItem(userCartKey);
 
     if (guestCart && (!userCart || JSON.parse(userCart).length === 0)) {
-      // Move guest cart to user cart
       localStorage.setItem(userCartKey, guestCart);
       localStorage.removeItem(guestCartKey);
       
     } else if (guestCart && userCart) {
-      // Merge carts if both exist
       const guestItems = JSON.parse(guestCart);
       const userItems = JSON.parse(userCart);
-
-      // Simple merge: add guest items to user cart, preferring user quantities for duplicates
       const mergedCart = [...userItems];
       guestItems.forEach((guestItem: any) => {
         const existingIndex = mergedCart.findIndex(

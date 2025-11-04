@@ -42,7 +42,7 @@ export class CheckoutPageComponent implements OnInit {
       this.toastr.error('Please login to access checkout');
       this.router.navigate(['/auth/signin']);
       return;
-    }
+    } 
 
     this.loadCart();
 
