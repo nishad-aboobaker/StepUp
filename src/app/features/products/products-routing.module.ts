@@ -6,9 +6,9 @@ import { ProductManagementComponent } from './product-management/product-managem
 
 const routes: Routes = [
   { path: '', component: ProductListsComponent },
+  { path: 'product-management', component: ProductManagementComponent },
   { path: ':category', component: ProductListsComponent },
   { path: 'details/:id', component: ProductDetailsComponent },
-  { path: 'product-management', component: ProductManagementComponent },
 ];
 
 @NgModule({
