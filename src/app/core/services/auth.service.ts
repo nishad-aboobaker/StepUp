@@ -56,7 +56,6 @@ export class AuthService {
       }
       localStorage.setItem('loggedInUser', JSON.stringify(user));
       this.toastr.success('Login successful!');
-
       if (user.role === 'admin') {
         this.router.navigate(['/dashboard']);
       } else {
