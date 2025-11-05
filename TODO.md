@@ -1,5 +1,0 @@
-- Update sidenav.component.html to include SVG icons for each link ✓
-- Update sidenav.component.css to match project theme: light background, borders, improved spacing and typography ✓
-- Update dashboard.component.html to add a top header with title ✓
-- Update dashboard.component.css to style the header like the navbar and adjust layout ✓
-- Test the changes by running the app
