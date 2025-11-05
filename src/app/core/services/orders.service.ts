@@ -68,7 +68,7 @@ export class OrdersService {
       total,
       shippingAddress,
       orderDate: new Date(),
-      status: 'shipped',
+      status: 'pending',
     };
 
     const orders = this.getOrders();
@@ -93,5 +93,50 @@ export class OrdersService {
       (a: Order, b: Order) =>
         new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()
     );
+  }
+
+  // Get all orders from all users (for admin view)
+  getAllOrders(): Order[] {
+    const allOrders: Order[] = [];
+    const keys = Object.keys(localStorage);
+
+    keys.forEach((key) => {
+      if (key.startsWith('orders_')) {
+        const data = localStorage.getItem(key);
+        if (data) {
+          const orders = JSON.parse(data);
+          allOrders.push(...orders);
+        }
+      }
+    });
+
+    // Sort all orders by orderDate descending (latest first)
+    return allOrders.sort(
+      (a: Order, b: Order) =>
+        new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()
+    );
+  }
+
+  // Update order status
+  updateOrderStatus(orderId: string, newStatus: Order['status']): boolean {
+    const keys = Object.keys(localStorage);
+    let updated = false;
+
+    keys.forEach((key) => {
+      if (key.startsWith('orders_')) {
+        const data = localStorage.getItem(key);
+        if (data) {
+          const orders: Order[] = JSON.parse(data);
+          const orderIndex = orders.findIndex((order) => order.id === orderId);
+          if (orderIndex !== -1) {
+            orders[orderIndex].status = newStatus;
+            localStorage.setItem(key, JSON.stringify(orders));
+            updated = true;
+          }
+        }
+      }
+    });
+
+    return updated;
   }
 }

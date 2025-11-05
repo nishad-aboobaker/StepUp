@@ -4,6 +4,100 @@
     <header class="dashboard-header">
       <h1>Order Management</h1>
     </header>
-    <main class="main-content"></main>
+    <main class="main-content">
+      <div class="orders-container">
+        <!-- Filter Section -->
+        <div class="filter-section">
+          <div class="filter-group">
+            <label for="statusFilter">Filter by Status:</label>
+            <select
+              id="statusFilter"
+              [value]="selectedStatus"
+              (change)="onStatusFilterChange($any($event.target).value)"
+              class="status-filter"
+            >
+              <option
+                *ngFor="let option of statusOptions"
+                [value]="option.value"
+              >
+                {{ option.label }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="orders-list" *ngIf="filteredOrders.length; else noOrders">
+          <div class="order-card" *ngFor="let order of filteredOrders">
+            <div class="order-header">
+              <h3>Order #{{ order.id }}</h3>
+              <div class="status-controls">
+                <span class="order-status" [class]="'status-' + order.status">{{
+                  order.status
+                }}</span>
+                <select
+                  [value]="order.status"
+                  (change)="
+                    updateOrderStatus(order.id, $any($event.target).value)
+                  "
+                  class="status-select"
+                  aria-label="Update order status"
+                >
+                  <option value="pending">Pending</option>
+                  <option value="shipped">Shipped</option>
+                  <option value="delivered">Delivered</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="order-date">
+              <p>Ordered on: {{ order.orderDate | date : "medium" }}</p>
+            </div>
+
+            <div class="order-items">
+              <div class="order-item" *ngFor="let item of order.items">
+                <img
+                  [src]="item.thumbnail"
+                  alt="{{ item.name }}"
+                  class="item-image"
+                />
+                <div class="item-details">
+                  <h4>{{ item.name }}</h4>
+                  <p>Qty: {{ item.qty }}</p>
+                  <p class="price">₹{{ item.price * item.qty }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="order-total">
+              <p>
+                <strong>Total: ₹{{ order.total }}</strong>
+              </p>
+            </div>
+
+            <div class="shipping-info">
+              <h4>Shipping Address:</h4>
+              <p>{{ order.shippingAddress.name }}</p>
+              <p>{{ order.shippingAddress.address }}</p>
+              <p>
+                {{ order.shippingAddress.city }},
+                {{ order.shippingAddress.zip }}
+              </p>
+              <p>{{ order.shippingAddress.email }}</p>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #noOrders>
+          <div class="no-orders">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png"
+              alt="orders-icon"
+            />
+            <h2>No orders yet</h2>
+            <p>No orders have been placed yet.</p>
+          </div>
+        </ng-template>
+      </div>
+    </main>
   </div>
 </div>
