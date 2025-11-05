@@ -4,6 +4,39 @@
     <header class="dashboard-header">
       <h1>User Management</h1>
     </header>
-    <main class="main-content"></main>
+    <main class="main-content">
+      <div class="user-list">
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+              <td>{{ user.blocked ? "Blocked" : "Active" }}</td>
+              <td>
+                <button
+                  class="action-btn"
+                  [class.block-btn]="!user.blocked"
+                  [class.unblock-btn]="user.blocked"
+                  (click)="toggleBlock(user)"
+                  *ngIf="user.role !== 'admin'"
+                >
+                  {{ user.blocked ? "Unblock" : "Block" }}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
   </div>
 </div>

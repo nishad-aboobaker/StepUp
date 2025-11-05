@@ -68,7 +68,7 @@ export class OrdersService {
       total,
       shippingAddress,
       orderDate: new Date(),
-      status: 'pending',
+      status: 'shipped',
     };
 
     const orders = this.getOrders();

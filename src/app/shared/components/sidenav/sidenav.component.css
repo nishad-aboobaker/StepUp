@@ -58,21 +58,23 @@
   bottom: 20px;
   left: 20px;
   right: 20px;
-  background-color: #dc3545;
-  color: #fff;
-  border: none;
-  padding: 12px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
+  color: #495057;
+  text-decoration: none;
   display: flex;
   align-items: center;
   gap: 10px;
-  transition: background-color 0.3s;
+  padding: 12px 15px;
+  border-radius: 8px;
+  transition: all 0.3s;
+  font-weight: 500;
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 .logout-btn:hover {
-  background-color: #c82333;
+  background-color: #f8f9fa;
+  color: #000;
 }
 
 .logout-btn svg {

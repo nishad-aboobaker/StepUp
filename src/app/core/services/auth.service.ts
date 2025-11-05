@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -20,7 +19,7 @@ export class AuthService {
         name: 'Admin',
         email: 'admin@stepup.com',
         password: 'adminpassword',
-        role: 'admin'
+        role: 'admin',
       };
       users.push(adminUser);
       localStorage.setItem('users', JSON.stringify(users));
@@ -35,7 +34,7 @@ export class AuthService {
       this.toastr.error('User already exists!');
       return false;
     }
-    userData.role = "user";
+    userData.role = 'user';
     users.push(userData);
     localStorage.setItem('users', JSON.stringify(users));
     this.toastr.success('Signup successful!');
@@ -51,7 +50,13 @@ export class AuthService {
     );
 
     if (user) {
-       if (!user.role) {
+      if (user.blocked) {
+        this.toastr.error(
+          'Your account has been blocked. Please contact support.'
+        );
+        return false;
+      }
+      if (!user.role) {
         user.role = 'user';
       }
       localStorage.setItem('loggedInUser', JSON.stringify(user));
@@ -79,7 +84,6 @@ export class AuthService {
     if (guestCart && (!userCart || JSON.parse(userCart).length === 0)) {
       localStorage.setItem(userCartKey, guestCart);
       localStorage.removeItem(guestCartKey);
-      
     } else if (guestCart && userCart) {
       const guestItems = JSON.parse(guestCart);
       const userItems = JSON.parse(userCart);
@@ -117,5 +121,18 @@ export class AuthService {
       return true;
     }
     return false;
+  }
+
+  getAllUsers(): any[] {
+    return JSON.parse(localStorage.getItem('users') || '[]');
+  }
+
+  toggleUserBlock(email: string): void {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find((u: any) => u.email === email);
+    if (user) {
+      user.blocked = !user.blocked;
+      localStorage.setItem('users', JSON.stringify(users));
+    }
   }
 }
