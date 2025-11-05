@@ -27,12 +27,6 @@ export class ProductManagementComponent implements OnInit {
   }
 
   editProduct(product: Product): void {
-    // Open a modal or inline form to edit the product
-    const newName = prompt('Enter new name:', product.name);
-    if (newName && newName !== product.name) {
-      const updatedProduct = { ...product, name: newName };
-      this.productsService.updateProduct(updatedProduct);
-      this.loadProducts(); // Refresh the list
-    }
+    this.router.navigate(['/products/update', product.id]);
   }
 }
