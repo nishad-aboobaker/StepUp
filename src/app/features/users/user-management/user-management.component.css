@@ -84,6 +84,16 @@
   background-color: #218838;
 }
 
+.view-btn {
+  background-color: #007bff;
+  color: #fff;
+  margin-right: 5px;
+}
+
+.view-btn:hover {
+  background-color: #0056b3;
+}
+
 @media (max-width: 768px) {
   .dashboard-container {
     flex-direction: column;

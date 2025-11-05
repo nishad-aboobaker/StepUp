@@ -82,4 +82,16 @@ export class OrdersService {
   private generateOrderId(): string {
     return 'ORD-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
   }
+
+  // Get orders for a specific user by userId
+  getOrdersByUserId(userId: string): Order[] {
+    const ordersKey = `orders_${userId}`;
+    const data = localStorage.getItem(ordersKey);
+    const orders = data ? JSON.parse(data) : [];
+    // Sort orders by orderDate descending (latest first)
+    return orders.sort(
+      (a: Order, b: Order) =>
+        new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()
+    );
+  }
 }
