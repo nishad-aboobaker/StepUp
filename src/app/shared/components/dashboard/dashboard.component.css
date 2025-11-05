@@ -35,7 +35,147 @@
   margin-bottom: 30px;
 }
 
-.analytics-section h2 {
+.analytics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.analytics-header h2 {
+  font-size: 1.5em;
+  margin: 0;
+  color: #343a40;
+}
+
+.filters {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.filter-group label {
+  font-weight: 500;
+  color: #495057;
+  font-size: 0.9em;
+}
+
+.filter-select {
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 0.9em;
+  color: #495057;
+  min-width: 120px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.filter-select:focus {
+  outline: 0;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: white;
+}
+
+.revenue-card {
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+}
+
+.sales-card {
+  background: linear-gradient(135deg, #50c878 0%, #32a852 100%);
+}
+
+.pending-card {
+  background: linear-gradient(135deg, #ff9500 0%, #e68600 100%);
+}
+
+.shipped-card {
+  background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
+}
+
+.delivered-card {
+  background: linear-gradient(135deg, #34c759 0%, #28a745 100%);
+}
+
+.monthly-revenue-card {
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+}
+
+.monthly-sales-card {
+  background: linear-gradient(135deg, #50c878 0%, #32a852 100%);
+}
+
+.monthly-pending-card {
+  background: linear-gradient(135deg, #ff9500 0%, #e68600 100%);
+}
+
+.monthly-shipped-card {
+  background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
+}
+
+.monthly-delivered-card {
+  background: linear-gradient(135deg, #34c759 0%, #28a745 100%);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.stat-icon {
+  font-size: 2.5em;
+  opacity: 0.9;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-card h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.1em;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.stat-value {
+  font-size: 2.2em;
+  font-weight: bold;
+  margin: 0;
+  opacity: 1;
+}
+
+/* Charts Section */
+.charts-section {
+  margin-top: 40px;
+}
+
+.charts-section h2 {
   font-size: 1.5em;
   margin-bottom: 20px;
   color: #343a40;
@@ -44,30 +184,94 @@
 .charts-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 20px;
+  gap: 30px;
 }
 
-.chart-card {
+.chart-container {
   background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  transition: box-shadow 0.3s ease;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  transition: all 0.3s ease;
 }
 
-.chart-card:hover {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+.chart-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
-.chart-card h3 {
-  margin-top: 0;
-  margin-bottom: 15px;
+.chart-container h3 {
+  margin: 0 0 20px 0;
   font-size: 1.2em;
+  color: #343a40;
+  text-align: center;
+}
+
+.chart-placeholder {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Bar Chart */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  width: 100%;
+  height: 200px;
+  margin-bottom: 20px;
+}
+
+.bar {
+  width: 30px;
+  background: #4a90e2;
+  border-radius: 4px 4px 0 0;
+  transition: all 0.3s ease;
+}
+
+.bar:hover {
+  opacity: 0.8;
+}
+
+.chart-labels {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  font-size: 0.9em;
+  color: #6c757d;
+}
+
+/* Pie Chart */
+.pie-chart {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  position: relative;
+  margin-bottom: 20px;
+  background: conic-gradient(#ff9500 0% 33%, #007aff 33% 66%, #34c759 66% 100%);
+}
+
+.chart-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9em;
   color: #495057;
 }
 
-.chart-card canvas {
-  max-height: 300px;
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
 }
 
 @media (max-width: 768px) {
@@ -83,11 +287,58 @@
     padding: 10px;
   }
 
+  .analytics-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filters {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .filter-group {
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    padding: 20px;
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .stat-icon {
+    font-size: 2em;
+  }
+
+  .stat-value {
+    font-size: 1.8em;
+  }
+
   .charts-grid {
     grid-template-columns: 1fr;
   }
 
-  .chart-card {
-    padding: 15px;
+  .chart-container {
+    padding: 20px;
+  }
+
+  .bar-chart {
+    height: 150px;
+  }
+
+  .bar {
+    width: 20px;
+  }
+
+  .pie-chart {
+    width: 120px;
+    height: 120px;
   }
 }

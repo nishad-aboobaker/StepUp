@@ -6,37 +6,207 @@
     </header>
     <main class="main-content">
       <div class="analytics-section">
-        <h2>E-commerce Analytics</h2>
-        <div class="charts-grid">
-          <div class="chart-card">
-            <h3>Sales Over Time</h3>
-            <canvas
-              baseChart
-              [data]="salesChartData"
-              [options]="salesChartOptions"
-              type="line"
-            >
-            </canvas>
+        <div class="analytics-header">
+          <h2>E-commerce Analytics</h2>
+          <div class="filters">
+            <div class="filter-group">
+              <label for="month-select">Month:</label>
+              <select
+                id="month-select"
+                [(ngModel)]="selectedMonth"
+                (ngModelChange)="onFilterChange()"
+                class="filter-select"
+              >
+                <option *ngFor="let month of months" [value]="month.value">
+                  {{ month.label }}
+                </option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="year-select">Year:</label>
+              <select
+                id="year-select"
+                [(ngModel)]="selectedYear"
+                (ngModelChange)="onFilterChange()"
+                class="filter-select"
+              >
+                <option *ngFor="let year of years" [value]="year">
+                  {{ year }}
+                </option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="category-select">Category:</label>
+              <select
+                id="category-select"
+                [(ngModel)]="selectedCategory"
+                (ngModelChange)="onFilterChange()"
+                class="filter-select"
+              >
+                <option *ngFor="let category of categories" [value]="category">
+                  {{ category | titlecase }}
+                </option>
+              </select>
+            </div>
           </div>
-          <div class="chart-card">
-            <h3>Orders Over Time</h3>
-            <canvas
-              baseChart
-              [data]="ordersChartData"
-              [options]="ordersChartOptions"
-              type="bar"
-            >
-            </canvas>
+        </div>
+        <div class="stats-sections">
+          <div class="stats-section">
+            <h3>Total Statistics (All Time)</h3>
+            <div class="stats-grid">
+              <div class="stat-card revenue-card">
+                <div class="stat-icon">
+                  <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="stat-content">
+                  <h3>Total Revenue</h3>
+                  <p class="stat-value">${{ totalRevenue | number }}</p>
+                </div>
+              </div>
+              <div class="stat-card sales-card">
+                <div class="stat-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="stat-content">
+                  <h3>Total Sales</h3>
+                  <p class="stat-value">{{ totalSales | number }}</p>
+                </div>
+              </div>
+              <div class="stat-card pending-card">
+                <div class="stat-icon">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                  <h3>Total Pending</h3>
+                  <p class="stat-value">{{ totalPending | number }}</p>
+                </div>
+              </div>
+              <div class="stat-card shipped-card">
+                <div class="stat-icon">
+                  <i class="fas fa-truck"></i>
+                </div>
+                <div class="stat-content">
+                  <h3>Total Shipped</h3>
+                  <p class="stat-value">{{ totalShipped | number }}</p>
+                </div>
+              </div>
+              <div class="stat-card delivered-card">
+                <div class="stat-icon">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                  <h3>Total Delivered</h3>
+                  <p class="stat-value">{{ totalDelivered | number }}</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="chart-card">
-            <h3>Sales by Category</h3>
-            <canvas
-              baseChart
-              [data]="categoryChartData"
-              [options]="categoryChartOptions"
-              type="pie"
-            >
-            </canvas>
+          <div class="stats-section">
+            <h3>
+              {{ months[selectedMonth].label }} {{ selectedYear }} Statistics
+            </h3>
+            <div class="stats-grid">
+              <div class="stat-card monthly-revenue-card">
+                <div class="stat-icon">
+                  <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="stat-content">
+                  <h3>{{ months[selectedMonth].label }} Revenue</h3>
+                  <p class="stat-value">${{ monthlyRevenue | number }}</p>
+                </div>
+              </div>
+              <div class="stat-card monthly-sales-card">
+                <div class="stat-icon">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-content">
+                  <h3>{{ months[selectedMonth].label }} Sales</h3>
+                  <p class="stat-value">{{ monthlySales | number }}</p>
+                </div>
+              </div>
+              <div class="stat-card monthly-pending-card">
+                <div class="stat-icon">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                  <h3>{{ months[selectedMonth].label }} Pending</h3>
+                  <p class="stat-value">{{ monthlyPending | number }}</p>
+                </div>
+              </div>
+              <div class="stat-card monthly-shipped-card">
+                <div class="stat-icon">
+                  <i class="fas fa-truck"></i>
+                </div>
+                <div class="stat-content">
+                  <h3>{{ months[selectedMonth].label }} Shipped</h3>
+                  <p class="stat-value">{{ monthlyShipped | number }}</p>
+                </div>
+              </div>
+              <div class="stat-card monthly-delivered-card">
+                <div class="stat-icon">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                  <h3>{{ months[selectedMonth].label }} Delivered</h3>
+                  <p class="stat-value">{{ monthlyDelivered | number }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+          <h2>Analytics Charts</h2>
+          <div class="charts-grid">
+            <div class="chart-container">
+              <h3>Revenue Trend</h3>
+              <div class="chart-placeholder">
+                <div class="bar-chart">
+                  <div
+                    class="bar"
+                    *ngFor="let revenue of revenueTrend"
+                    [style.height.%]="revenue"
+                    style="background: #4a90e2"
+                  ></div>
+                </div>
+                <div class="chart-labels">
+                  <span *ngFor="let label of monthLabels">{{ label }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="chart-container">
+              <h3>Order Status Distribution</h3>
+              <div class="chart-placeholder">
+                <div
+                  class="pie-chart"
+                  [style.background]="pieChartGradient"
+                ></div>
+                <div class="chart-legend">
+                  <div class="legend-item">
+                    <span
+                      class="legend-color"
+                      style="background: #ff9500"
+                    ></span>
+                    <span>Pending ({{ pieChartData.pending }})</span>
+                  </div>
+                  <div class="legend-item">
+                    <span
+                      class="legend-color"
+                      style="background: #007aff"
+                    ></span>
+                    <span>Shipped ({{ pieChartData.shipped }})</span>
+                  </div>
+                  <div class="legend-item">
+                    <span
+                      class="legend-color"
+                      style="background: #34c759"
+                    ></span>
+                    <span>Delivered ({{ pieChartData.delivered }})</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
