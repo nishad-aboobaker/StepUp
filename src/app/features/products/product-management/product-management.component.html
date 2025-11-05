@@ -4,6 +4,48 @@
     <header class="dashboard-header">
       <h1>Product Management</h1>
     </header>
-    <main class="main-content"></main>
+    <main class="main-content">
+      <div class="product-list">
+        <table class="product-table">
+          <thead>
+            <tr>
+              <th>Thumbnail</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Brand</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of products">
+              <td>
+                <img
+                  [src]="product.thumbnail"
+                  alt="Product Image"
+                  class="product-thumbnail"
+                />
+              </td>
+              <td>{{ product.id }}</td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.brand }}</td>
+              <td>{{ product.category }}</td>
+              <td>{{ product.price | currency }}</td>
+              <td>{{ product.stock }}</td>
+              <td>
+                <button
+                  class="action-btn edit-btn"
+                  (click)="editProduct(product)"
+                >
+                  Edit
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
   </div>
 </div>

@@ -1,9 +1,7 @@
-# TODO: Implement Email Notifications for Order Status Updates
-
-## Tasks
-
-- [x] Update OrdersService updateOrderStatus method to return both update success and email send status
-- [x] Enhance EmailService sendOrderStatusUpdateEmail to include order total and items summary in email
-- [x] Update OrderManagementComponent to handle new return value and show appropriate toastr messages for different scenarios
-- [x] Add order confirmation email when checkout is successful
-- [ ] Test email sending with EmailJS configuration (user needs to replace placeholders in EmailService)
+- [x] Update product-management.component.ts to import and inject ProductsService, add products array, and load products in ngOnInit
+- [x] Update product-management.component.html to display products in a table with columns for Thumbnail, ID, Name, Brand, Category, Price, Stock, and Actions (e.g., Edit)
+- [x] Rename viewProduct method to editProduct and update button text to "Edit"
+- [x] Add updateProduct method to ProductsService to update product details
+- [x] Make editProduct method functional by opening a prompt to edit product name and updating via service
+- [x] Update CSS for better styling of the product table including thumbnail images and green Edit button
+- [x] Test the implementation by running the app and checking the product management page (App is running on localhost:4200)

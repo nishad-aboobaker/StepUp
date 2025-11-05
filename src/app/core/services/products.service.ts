@@ -595,5 +595,12 @@ export class ProductsService {
     },
   ];
 
+  updateProduct(updatedProduct: Product): void {
+    const index = this.products.findIndex((p) => p.id === updatedProduct.id);
+    if (index !== -1) {
+      this.products[index] = { ...updatedProduct };
+    }
+  }
+
   constructor() {}
 }
