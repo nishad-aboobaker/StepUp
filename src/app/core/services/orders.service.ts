@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CartItem } from './cart.service';
 import { AuthService } from './auth.service';
+import { EmailService } from './email.service';
 
 export interface Order {
   id: string;
@@ -22,7 +23,10 @@ export interface Order {
   providedIn: 'root',
 })
 export class OrdersService {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private emailService: EmailService
+  ) {}
 
   // Get the orders key based on authentication status
   private getOrdersKey(): string {
@@ -51,10 +55,10 @@ export class OrdersService {
   }
 
   // Place a new order
-  placeOrder(
+  async placeOrder(
     items: CartItem[],
     shippingAddress: Order['shippingAddress']
-  ): Order {
+  ): Promise<Order> {
     const user = this.authService.getCurrentUser();
     if (!user) {
       throw new Error('User must be authenticated to place an order');
@@ -74,6 +78,32 @@ export class OrdersService {
     const orders = this.getOrders();
     orders.push(order);
     this.saveOrders(orders);
+
+    // Send order confirmation email
+    try {
+      const itemsSummary = order.items
+        .map((item: CartItem) => `${item.name} (Qty: ${item.qty})`)
+        .join(', ');
+
+      const shippingAddressString = `${order.shippingAddress.name}\n${order.shippingAddress.address}\n${order.shippingAddress.city}, ${order.shippingAddress.zip}`;
+
+      const emailSent = await this.emailService.sendOrderConfirmationEmail(
+        order.shippingAddress.email,
+        order.shippingAddress.name,
+        order.id,
+        new Date(order.orderDate).toLocaleDateString(),
+        order.total,
+        itemsSummary,
+        shippingAddressString,
+        order.status
+      );
+
+      if (!emailSent) {
+        console.warn('Order placed successfully but confirmation email failed');
+      }
+    } catch (error) {
+      console.error('Error sending order confirmation email:', error);
+    }
 
     return order;
   }
@@ -118,9 +148,13 @@ export class OrdersService {
   }
 
   // Update order status
-  updateOrderStatus(orderId: string, newStatus: Order['status']): boolean {
+  async updateOrderStatus(
+    orderId: string,
+    newStatus: Order['status']
+  ): Promise<{ updated: boolean; emailSent: boolean }> {
     const keys = Object.keys(localStorage);
     let updated = false;
+    let orderToNotify: Order | null = null;
 
     keys.forEach((key) => {
       if (key.startsWith('orders_')) {
@@ -131,12 +165,40 @@ export class OrdersService {
           if (orderIndex !== -1) {
             orders[orderIndex].status = newStatus;
             localStorage.setItem(key, JSON.stringify(orders));
+            orderToNotify = { ...orders[orderIndex] };
             updated = true;
           }
         }
       }
     });
 
-    return updated;
+    let emailSent = false;
+    // Send email notification if order was updated
+    if (updated && orderToNotify) {
+      try {
+        // Create items summary
+        const itemsSummary = (orderToNotify as Order).items
+          .map((item: CartItem) => `${item.name} (Qty: ${item.qty})`)
+          .join(', ');
+
+        emailSent = await this.emailService.sendOrderStatusUpdateEmail(
+          (orderToNotify as Order).shippingAddress.email,
+          (orderToNotify as Order).shippingAddress.name,
+          (orderToNotify as Order).id,
+          newStatus,
+          new Date((orderToNotify as Order).orderDate).toLocaleDateString(),
+          (orderToNotify as Order).total,
+          itemsSummary
+        );
+
+        if (!emailSent) {
+          console.warn('Order status updated but email notification failed');
+        }
+      } catch (error) {
+        console.error('Error sending email notification:', error);
+      }
+    }
+
+    return { updated, emailSent };
   }
 }

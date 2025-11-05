@@ -47,13 +47,29 @@ export class OrderManagementComponent implements OnInit {
     this.applyFilter();
   }
 
-  updateOrderStatus(orderId: string, newStatus: Order['status']) {
-    const success = this.ordersService.updateOrderStatus(orderId, newStatus);
-    if (success) {
-      this.toastr.success('Order status updated successfully');
-      this.loadAllOrders(); // Refresh the list
-    } else {
-      this.toastr.error('Failed to update order status');
+  async updateOrderStatus(orderId: string, newStatus: Order['status']) {
+    try {
+      const result = await this.ordersService.updateOrderStatus(
+        orderId,
+        newStatus
+      );
+      if (result.updated) {
+        if (result.emailSent) {
+          this.toastr.success(
+            'Order status updated successfully! Email notification sent to customer.'
+          );
+        } else {
+          this.toastr.warning(
+            'Order status updated successfully, but email notification failed. Please check EmailJS configuration.'
+          );
+        }
+        this.loadAllOrders(); // Refresh the list
+      } else {
+        this.toastr.error('Failed to update order status');
+      }
+    } catch (error) {
+      console.error('Error updating order status:', error);
+      this.toastr.error('An error occurred while updating the order status');
     }
   }
 }

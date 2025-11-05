@@ -42,7 +42,7 @@ export class CheckoutPageComponent implements OnInit {
       this.toastr.error('Please login to access checkout');
       this.router.navigate(['/auth/signin']);
       return;
-    } 
+    }
 
     this.loadCart();
 
@@ -82,17 +82,20 @@ export class CheckoutPageComponent implements OnInit {
     this.processPayment();
   }
 
-  processPayment() {
+  async processPayment() {
     // Simulate payment processing delay
-    setTimeout(() => {
+    setTimeout(async () => {
       try {
-        const order: Order = this.ordersService.placeOrder(
+        const order: Order = await this.ordersService.placeOrder(
           this.cartItems,
           this.shippingForm
         );
         this.cartService.saveCart([]); // Clear the cart
         this.isProcessing = false;
         this.showPaymentModal = true;
+        this.toastr.success(
+          'Order placed successfully! Check your email for confirmation.'
+        );
       } catch (error) {
         this.isProcessing = false;
         this.toastr.error('Failed to place order. Please try again.');
