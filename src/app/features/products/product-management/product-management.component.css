@@ -93,9 +93,38 @@
     padding: 10px;
   }
 
+  .product-table {
+    font-size: 0.8em;
+  }
+
   .product-table th,
   .product-table td {
-    padding: 8px 10px;
-    font-size: 0.9em;
+    padding: 6px 8px;
+    font-size: 0.8em;
+  }
+
+  .product-thumbnail {
+    width: 40px;
+    height: 40px;
+  }
+
+  .product-table th:nth-child(1),
+  .product-table td:nth-child(1) {
+    display: none;
+  }
+
+  .product-table th:nth-child(4),
+  .product-table td:nth-child(4) {
+    display: none;
+  }
+
+  .product-table th:nth-child(5),
+  .product-table td:nth-child(5) {
+    display: none;
+  }
+
+  .action-btn {
+    padding: 4px 8px;
+    font-size: 0.8em;
   }
 }
