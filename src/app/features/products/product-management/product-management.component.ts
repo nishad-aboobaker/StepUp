@@ -29,4 +29,15 @@ export class ProductManagementComponent implements OnInit {
   editProduct(product: Product): void {
     this.router.navigate(['/products/update', product.id]);
   }
+
+  deleteProduct(product: Product): void {
+    if (confirm(`Are you sure you want to delete "${product.name}"?`)) {
+      this.productsService.deleteProduct(product.id);
+      this.loadProducts(); // Refresh the list
+    }
+  }
+
+  createProduct(): void {
+    this.router.navigate(['/products/create']);
+  }
 }

@@ -595,11 +595,21 @@ export class ProductsService {
     },
   ];
 
+  addProduct(newProduct: Omit<Product, 'id'>): void {
+    const newId = Math.max(...this.products.map((p) => p.id)) + 1;
+    const product: Product = { ...newProduct, id: newId };
+    this.products.push(product);
+  }
+
   updateProduct(updatedProduct: Product): void {
     const index = this.products.findIndex((p) => p.id === updatedProduct.id);
     if (index !== -1) {
       this.products[index] = { ...updatedProduct };
     }
+  }
+
+  deleteProduct(id: number): void {
+    this.products = this.products.filter((p) => p.id !== id);
   }
 
   constructor() {}

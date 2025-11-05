@@ -3,6 +3,7 @@
   <div class="main-section">
     <header class="dashboard-header">
       <h1>Product Management</h1>
+      <button class="create-btn" (click)="createProduct()">Add Product</button>
     </header>
     <main class="main-content">
       <div class="product-list">
@@ -40,6 +41,12 @@
                   (click)="editProduct(product)"
                 >
                   Edit
+                </button>
+                <button
+                  class="action-btn delete-btn"
+                  (click)="deleteProduct(product)"
+                >
+                  Delete
                 </button>
               </td>
             </tr>
