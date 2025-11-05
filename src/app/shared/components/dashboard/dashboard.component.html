@@ -5,6 +5,41 @@
       <h1>Admin Panel</h1>
     </header>
     <main class="main-content">
+      <div class="analytics-section">
+        <h2>E-commerce Analytics</h2>
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3>Sales Over Time</h3>
+            <canvas
+              baseChart
+              [data]="salesChartData"
+              [options]="salesChartOptions"
+              type="line"
+            >
+            </canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Orders Over Time</h3>
+            <canvas
+              baseChart
+              [data]="ordersChartData"
+              [options]="ordersChartOptions"
+              type="bar"
+            >
+            </canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Sales by Category</h3>
+            <canvas
+              baseChart
+              [data]="categoryChartData"
+              [options]="categoryChartOptions"
+              type="pie"
+            >
+            </canvas>
+          </div>
+        </div>
+      </div>
       <router-outlet></router-outlet>
     </main>
   </div>
