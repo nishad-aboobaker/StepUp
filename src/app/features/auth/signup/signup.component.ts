@@ -4,14 +4,15 @@ import { AuthService } from 'src/app/core/services/auth.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent {
   user = {
     name: '',
     email: '',
+    phone: '',
     password: '',
-    role:'user'
+    role: 'user',
   };
 
   constructor(private auth: AuthService) {}

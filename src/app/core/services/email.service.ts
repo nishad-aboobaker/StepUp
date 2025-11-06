@@ -6,7 +6,8 @@ import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 })
 export class EmailService {
   private serviceId = 'service_u745apb'; // Replace with your EmailJS service ID
-  private templateId = 'template_o5flbfe'; // Replace with your EmailJS template ID
+  private templateIdUpdate = 'template_o5flbfe'; // Replace with your EmailJS template ID
+  private templateIdConfirm = 'template_bje9hhe'; // Replace with your EmailJS template ID
   private publicKey = 'SWC2-g6JKYPKan4z-'; // Replace with your EmailJS public key
 
   constructor() {
@@ -36,11 +37,14 @@ export class EmailService {
         shipping_address: shippingAddress,
         order_status: orderStatus,
         subject: `Order Confirmation - ${orderId}`,
+        year: new Date().getFullYear()
       };
+
+
 
       const response: EmailJSResponseStatus = await emailjs.send(
         this.serviceId,
-        this.templateId,
+        this.templateIdConfirm,
         templateParams
       );
 
@@ -76,7 +80,7 @@ export class EmailService {
 
       const response: EmailJSResponseStatus = await emailjs.send(
         this.serviceId,
-        this.templateId,
+        this.templateIdUpdate,
         templateParams
       );
 
@@ -89,9 +93,10 @@ export class EmailService {
   }
 
   // Update EmailJS configuration
-  updateConfig(serviceId: string, templateId: string, publicKey: string) {
+  updateConfig(serviceId: string, templateIdConfirm: string,templateIdUpdate: string, publicKey: string) {
     this.serviceId = serviceId;
-    this.templateId = templateId;
+    this.templateIdConfirm = templateIdConfirm;
+    this.templateIdUpdate = templateIdUpdate;
     this.publicKey = publicKey;
     emailjs.init(this.publicKey);
   }

@@ -8,6 +8,7 @@
       <div class="user-details" *ngIf="user">
         <h2>{{ user.name }}</h2>
         <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Phone:</strong> {{ user.phone }}</p>
         <p><strong>Total Orders:</strong> {{ orders.length }}</p>
         <p>
           <strong>Status:</strong> {{ user.blocked ? "Blocked" : "Active" }}
