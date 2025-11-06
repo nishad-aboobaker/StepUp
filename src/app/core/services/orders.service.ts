@@ -109,9 +109,11 @@ export class OrdersService {
   }
 
   // Generate a unique order ID
-  private generateOrderId(): string {
-    return 'ORD-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-  }
+ private generateOrderId(): string {
+  const randomPart = Math.random().toString(36).slice(2, 6).toUpperCase();
+  return `ORD-${Date.now().toString().slice(-5)}${randomPart}`;
+}
+
 
   // Get orders for a specific user by userId
   getOrdersByUserId(userId: string): Order[] {

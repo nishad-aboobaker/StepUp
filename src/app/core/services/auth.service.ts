@@ -18,7 +18,7 @@ export class AuthService {
       const adminUser = {
         name: 'Admin',
         email: 'admin@stepup.com',
-        password: 'adminpassword',
+        password: '123123',
         role: 'admin',
       };
       users.push(adminUser);
