@@ -13,7 +13,7 @@
         <input type="password" id="password" placeholder="Enter your password" [(ngModel)]="credentials.password" name="password" required>
       </div>
       <button type="submit" class="signin-button" [disabled]="!loginForm.valid">Sign In</button>
-      <a href="#" class="forgot-password">Forgot password?</a>
+      <a routerLink="/auth/forgot-password" class="forgot-password">Forgot password?</a>
     </form>
     <div class="signup-link">
       <p>Don't have an account? <a routerLink="/auth/signup">Sign up</a></p>

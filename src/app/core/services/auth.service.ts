@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -168,6 +169,64 @@ export class AuthService {
     if (user) {
       user.blocked = !user.blocked;
       localStorage.setItem('users', JSON.stringify(users));
+    }
+  }
+
+  async sendPasswordResetOtp(email: string): Promise<boolean> {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find((u: any) => u.email === email);
+
+    if (!user) {
+      this.toastr.error('User not found!');
+      return false;
+    }
+
+    const otp = Math.floor(1000 + Math.random() * 9000).toString();
+    this.tempUserData = { email, otp };
+
+    const emailSent = await this.emailService.sendPasswordResetOtpEmail(
+      email,
+      user.name,
+      otp
+    );
+
+    if (emailSent) {
+      this.toastr.success('OTP sent to your email!');
+      return true;
+    } else {
+      this.toastr.error('Failed to send OTP. Please try again.');
+      return false;
+    }
+  }
+
+  verifyPasswordResetOtp(otp: string): boolean {
+    if (this.tempUserData && this.tempUserData.otp === otp) {
+      return true;
+    } else {
+      this.toastr.error('Invalid OTP!');
+      return false;
+    }
+  }
+
+  resetPassword(password: string): boolean {
+    if (!this.tempUserData) {
+      this.toastr.error('Something went wrong. Please try again.');
+      return false;
+    }
+
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find((u: any) => u.email === this.tempUserData.email);
+
+    if (user) {
+      user.password = password;
+      localStorage.setItem('users', JSON.stringify(users));
+      this.toastr.success('Password reset successful!');
+      this.router.navigate(['/auth/signin']);
+      this.tempUserData = null;
+      return true;
+    } else {
+      this.toastr.error('User not found!');
+      return false;
     }
   }
 }

@@ -14,6 +14,7 @@ export class EmailService {
   // Credentials for the OTP service
   private otpServiceId = 'service_yerp24r';
   private otpTemplateId = 'template_andd5te';
+  private passwordResetTemplateId = 'template_ovkwa08'; // New template for password reset
   private otpPublicKey = 'uwAwrDG8D6KCg0qZo';
 
   constructor() {
@@ -97,7 +98,6 @@ export class EmailService {
   }
 
   async sendOtpEmail(userEmail: string, userName: string, otp: string): Promise<boolean> {
-    emailjs.init(this.otpPublicKey);
     try {
       const templateParams = {
         to_email: userEmail,
@@ -110,7 +110,8 @@ export class EmailService {
       const response: EmailJSResponseStatus = await emailjs.send(
         this.otpServiceId,
         this.otpTemplateId,
-        templateParams
+        templateParams,
+		this.otpPublicKey
       );
 
       console.log('OTP email sent successfully:', response);
@@ -118,8 +119,31 @@ export class EmailService {
     } catch (error) {
       console.error('Failed to send OTP email:', error);
       return false;
-    } finally {
-      emailjs.init(this.publicKey);
+    }
+  }
+
+  async sendPasswordResetOtpEmail(userEmail: string, userName: string, otp: string): Promise<boolean> {
+    try {
+      const templateParams = {
+        to_email: userEmail,
+        to_name: userName,
+        otp: otp,
+        subject: 'Password Reset OTP',
+        year: new Date().getFullYear()
+      };
+
+      const response: EmailJSResponseStatus = await emailjs.send(
+        this.otpServiceId,
+        this.passwordResetTemplateId,
+        templateParams,
+		this.otpPublicKey
+      );
+
+      console.log('Password reset OTP email sent successfully:', response);
+      return true;
+    } catch (error) {
+      console.error('Failed to send password reset OTP email:', error);
+      return false;
     }
   }
 
