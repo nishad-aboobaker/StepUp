@@ -2,7 +2,7 @@
 <div class="signup-container">
   <div class="signup-form">
     <h2>Create Account</h2>
-    <form (ngSubmit)="onSignup()" #signupForm="ngForm">
+    <form *ngIf="!otpSent" (ngSubmit)="onSignup()" #signupForm="ngForm">
       <div class="form-group">
         <label for="name">Name</label>
         <input
@@ -55,6 +55,24 @@
         Sign Up
       </button>
     </form>
+
+    <form *ngIf="otpSent" (ngSubmit)="onVerifyOtp()" #otpForm="ngForm">
+      <div class="form-group">
+        <label for="otp">Enter OTP</label>
+        <input
+          type="text"
+          id="otp"
+          placeholder="Enter the 4-digit OTP"
+          [(ngModel)]="otp"
+          name="otp"
+          required
+        />
+      </div>
+      <button type="submit" class="signup-button" [disabled]="!otpForm.valid">
+        Verify OTP
+      </button>
+    </form>
+
     <div class="signin-link">
       <p>Already have an account? <a routerLink="/auth/signin">Sign in</a></p>
     </div>

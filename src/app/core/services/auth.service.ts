@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { EmailService } from './email.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private router: Router, private toastr: ToastrService) {
+  private tempUserData: any;
+
+  constructor(
+    private router: Router,
+    private toastr: ToastrService,
+    private emailService: EmailService
+  ) {
     this.ensureAdminExists();
   }
 
@@ -26,7 +33,7 @@ export class AuthService {
     }
   }
 
-  signup(userData: any): boolean {
+  async signupAndSendOtp(userData: any): Promise<boolean> {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     const exists = users.some((u: any) => u.email === userData.email);
 
@@ -34,12 +41,40 @@ export class AuthService {
       this.toastr.error('User already exists!');
       return false;
     }
-    userData.role = 'user';
-    users.push(userData);
-    localStorage.setItem('users', JSON.stringify(users));
-    this.toastr.success('Signup successful!');
-    this.router.navigate(['/auth/signin']);
-    return true;
+
+    const otp = Math.floor(1000 + Math.random() * 9000).toString();
+    this.tempUserData = { ...userData, otp };
+
+    const emailSent = await this.emailService.sendOtpEmail(
+      userData.email,
+      userData.name,
+      otp
+    );
+
+    if (emailSent) {
+      this.toastr.success('OTP sent to your email!');
+      return true;
+    } else {
+      this.toastr.error('Failed to send OTP. Please try again.');
+      return false;
+    }
+  }
+
+  verifyOtpAndRegister(otp: string): boolean {
+    if (this.tempUserData && this.tempUserData.otp === otp) {
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const { otp: _, ...userDataToSave } = this.tempUserData;
+      userDataToSave.role = 'user';
+      users.push(userDataToSave);
+      localStorage.setItem('users', JSON.stringify(users));
+      this.toastr.success('Signup successful!');
+      this.router.navigate(['/auth/signin']);
+      this.tempUserData = null;
+      return true;
+    } else {
+      this.toastr.error('Invalid OTP!');
+      return false;
+    }
   }
 
   login(credentials: any): boolean {

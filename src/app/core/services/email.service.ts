@@ -5,13 +5,19 @@ import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
   providedIn: 'root',
 })
 export class EmailService {
-  private serviceId = 'service_u745apb'; // Replace with your EmailJS service ID
-  private templateIdUpdate = 'template_o5flbfe'; // Replace with your EmailJS template ID
-  private templateIdConfirm = 'template_bje9hhe'; // Replace with your EmailJS template ID
-  private publicKey = 'SWC2-g6JKYPKan4z-'; // Replace with your EmailJS public key
+  // Credentials for the main service
+  private serviceId = 'service_u745apb';
+  private templateIdUpdate = 'template_o5flbfe';
+  private templateIdConfirm = 'template_bje9hhe';
+  private publicKey = 'SWC2-g6JKYPKan4z-';
+
+  // Credentials for the OTP service
+  private otpServiceId = 'service_yerp24r';
+  private otpTemplateId = 'template_andd5te';
+  private otpPublicKey = 'uwAwrDG8D6KCg0qZo';
 
   constructor() {
-    // Initialize EmailJS with your public key
+    // Initialize EmailJS with the public key for the main service
     emailjs.init(this.publicKey);
   }
 
@@ -39,8 +45,6 @@ export class EmailService {
         subject: `Order Confirmation - ${orderId}`,
         year: new Date().getFullYear()
       };
-
-
 
       const response: EmailJSResponseStatus = await emailjs.send(
         this.serviceId,
@@ -89,6 +93,33 @@ export class EmailService {
     } catch (error) {
       console.error('Failed to send email:', error);
       return false;
+    }
+  }
+
+  async sendOtpEmail(userEmail: string, userName: string, otp: string): Promise<boolean> {
+    emailjs.init(this.otpPublicKey);
+    try {
+      const templateParams = {
+        to_email: userEmail,
+        to_name: userName,
+        otp: otp,
+        subject: 'Your OTP for Sign Up',
+        year: new Date().getFullYear()
+      };
+
+      const response: EmailJSResponseStatus = await emailjs.send(
+        this.otpServiceId,
+        this.otpTemplateId,
+        templateParams
+      );
+
+      console.log('OTP email sent successfully:', response);
+      return true;
+    } catch (error) {
+      console.error('Failed to send OTP email:', error);
+      return false;
+    } finally {
+      emailjs.init(this.publicKey);
     }
   }
 
