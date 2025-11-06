@@ -5,9 +5,9 @@ import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
   providedIn: 'root',
 })
 export class EmailService {
-  private serviceId = 'service_y8efakj'; // Replace with your EmailJS service ID
-  private templateId = 'template_bqwscua'; // Replace with your EmailJS template ID
-  private publicKey = 'LsPWBKpkpV9jVkSdU'; // Replace with your EmailJS public key
+  private serviceId = 'service_u745apb'; // Replace with your EmailJS service ID
+  private templateId = 'template_o5flbfe'; // Replace with your EmailJS template ID
+  private publicKey = 'SWC2-g6JKYPKan4z-'; // Replace with your EmailJS public key
 
   constructor() {
     // Initialize EmailJS with your public key
