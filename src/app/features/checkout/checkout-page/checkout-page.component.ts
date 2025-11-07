@@ -17,6 +17,7 @@ export class CheckoutPageComponent implements OnInit {
   shippingForm = {
     name: '',
     email: '',
+    phone: '',
     address: '',
     city: '',
     zip: '',
