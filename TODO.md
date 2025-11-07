@@ -1,15 +1,17 @@
-# TODO: Include Phone Number in User Registration
+# TODO: Integrate Razorpay Payment Gateway
 
 ## Steps to Complete
 
-1. **Update Signup Form HTML**: Add a phone number input field to `src/app/features/auth/signup/signup.component.html` between email and password fields. ✅
+1. **Add Razorpay Script to index.html**: Include the Razorpay checkout script in the head section of index.html for loading the SDK. ✅
 
-2. **Update Signup Component TypeScript**: Modify `src/app/features/auth/signup/signup.component.ts` to include `phone` in the user object. ✅
+2. **Create Payment Service**: Create `src/app/core/services/payment.service.ts` to encapsulate Razorpay initialization and payment handling logic. ✅
 
-3. **Update Auth Service**: Modify `src/app/core/services/auth.service.ts` to handle the phone number in the signup method (no changes needed as it pushes userData directly, but ensure it's included). ✅
+3. **Update Checkout Component TypeScript**: Modify `src/app/features/checkout/checkout-page/checkout-page.component.ts` to use the PaymentService instead of simulated payment processing. ✅
 
-4. **Update User Management Display**: Add a "Phone" column to the user table in `src/app/features/users/user-management/user-management.component.html` to display phone numbers. ✅
+4. **Update Checkout Component HTML**: Remove manual card input fields from `src/app/features/checkout/checkout-page/checkout-page.component.html` and replace with Razorpay payment button. ✅
 
-5. **Test Signup Process**: Verify that the phone number is captured, stored, and displayed correctly.
+5. **Handle Payment Callbacks**: Ensure successful payment triggers order placement and shows confirmation modal, while handling failures appropriately. ✅
 
-6. **Optional: Update User Detail View**: If needed, update `src/app/features/users/user-detail/user-detail.component.html` to show phone number in user details.
+6. **Test Integration**: Verify the Razorpay modal opens, processes test payments, and integrates with the order flow.
+
+7. **Update TODO.md**: Mark tasks as completed and remove this section once integration is done.

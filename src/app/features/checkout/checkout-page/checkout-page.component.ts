@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CartService, CartItem } from '../../../core/services/cart.service';
 import { OrdersService, Order } from '../../../core/services/orders.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { PaymentService } from '../../../core/services/payment.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -20,11 +21,6 @@ export class CheckoutPageComponent implements OnInit {
     city: '',
     zip: '',
   };
-  paymentForm = {
-    cardNumber: '',
-    expiryDate: '',
-    cvv: '',
-  };
   showPaymentModal = false;
   isProcessing = false;
 
@@ -32,6 +28,7 @@ export class CheckoutPageComponent implements OnInit {
     private cartService: CartService,
     private ordersService: OrdersService,
     private authService: AuthService,
+    private paymentService: PaymentService,
     private router: Router,
     private toastr: ToastrService
   ) {}
@@ -64,7 +61,7 @@ export class CheckoutPageComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.isFormValid()) {
+    if (!this.isShippingFormValid()) {
       this.toastr.error('Please fill in all required fields');
       return;
     }
@@ -78,29 +75,51 @@ export class CheckoutPageComponent implements OnInit {
     // Start processing
     this.isProcessing = true;
 
-    // Simulate payment processing
-    this.processPayment();
+    // Initiate Razorpay payment
+    this.initiatePayment();
   }
 
-  async processPayment() {
-    // Simulate payment processing delay
-    setTimeout(async () => {
-      try {
-        const order: Order = await this.ordersService.placeOrder(
-          this.cartItems,
-          this.shippingForm
-        );
-        this.cartService.saveCart([]); // Clear the cart
-        this.isProcessing = false;
-        this.showPaymentModal = true;
-        this.toastr.success(
-          'Order placed successfully! Check your email for confirmation.'
-        );
-      } catch (error) {
-        this.isProcessing = false;
-        this.toastr.error('Failed to place order. Please try again.');
+  async initiatePayment() {
+    const orderId = 'order_' + Date.now(); // Generate a simple order ID for demo
+
+    this.paymentService.initiatePayment(
+      this.total,
+      'INR',
+      orderId,
+      this.shippingForm.name,
+      this.shippingForm.email,
+      (response) => {
+        // Payment successful
+        this.handlePaymentSuccess(response);
+      },
+      (error) => {
+        // Payment failed or dismissed
+        this.handlePaymentFailure(error);
       }
-    }, 2000); // 2 second delay to simulate processing
+    );
+  }
+
+  async handlePaymentSuccess(response: any) {
+    try {
+      const order: Order = await this.ordersService.placeOrder(
+        this.cartItems,
+        this.shippingForm
+      );
+      this.cartService.saveCart([]); // Clear the cart
+      this.isProcessing = false;
+      this.showPaymentModal = true;
+      this.toastr.success(
+        'Order placed successfully! Check your email for confirmation.'
+      );
+    } catch (error) {
+      this.isProcessing = false;
+      this.toastr.error('Failed to place order. Please try again.');
+    }
+  }
+
+  handlePaymentFailure(error: any) {
+    this.isProcessing = false;
+    this.toastr.error('Payment failed or was cancelled. Please try again.');
   }
 
   onModalClose() {
@@ -108,36 +127,13 @@ export class CheckoutPageComponent implements OnInit {
     this.router.navigate(['/products']);
   }
 
-  isFormValid(): boolean {
+  isShippingFormValid(): boolean {
     return !!(
       this.shippingForm.name &&
       this.shippingForm.email &&
       this.shippingForm.address &&
       this.shippingForm.city &&
-      this.shippingForm.zip &&
-      this.paymentForm.cardNumber &&
-      this.paymentForm.expiryDate &&
-      this.paymentForm.cvv
+      this.shippingForm.zip
     );
-  }
-
-  isPaymentFormValid(): boolean {
-    return !!(
-      this.paymentForm.cardNumber &&
-      this.paymentForm.expiryDate &&
-      this.paymentForm.cvv
-    );
-  }
-
-  getCardType(): string {
-    const cardNumber = this.paymentForm.cardNumber.replace(/\s/g, '');
-    if (/^4/.test(cardNumber)) {
-      return 'visa';
-    } else if (/^5[1-5]/.test(cardNumber) || /^2[2-7]/.test(cardNumber)) {
-      return 'mastercard';
-    } else if (/^3[47]/.test(cardNumber)) {
-      return 'amex';
-    }
-    return '';
   }
 }
