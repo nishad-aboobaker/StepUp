@@ -13,9 +13,9 @@ export class OrderManagementComponent implements OnInit {
   selectedStatus: string = 'all';
   statusOptions: { value: string; label: string }[] = [
     { value: 'all', label: 'All Orders' },
-    { value: 'pending', label: 'Pending' },
-    { value: 'shipped', label: 'Shipped' },
-    { value: 'delivered', label: 'Delivered' },
+    { value: 'Pending', label: 'Pending' },
+    { value: 'Shipped', label: 'Shipped' },
+    { value: 'Delivered', label: 'Delivered' },
   ];
 
   constructor(

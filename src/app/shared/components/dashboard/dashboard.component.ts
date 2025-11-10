@@ -129,13 +129,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     // Monthly order status counts
     this.monthlyPending = filteredOrders.filter(
-      (order) => order.status === 'pending'
+      (order) => order.status === 'Pending'
     ).length;
     this.monthlyShipped = filteredOrders.filter(
-      (order) => order.status === 'shipped'
+      (order) => order.status === 'Shipped'
     ).length;
     this.monthlyDelivered = filteredOrders.filter(
-      (order) => order.status === 'delivered'
+      (order) => order.status === 'Delivered'
     ).length;
 
     // Total stats (all time)
@@ -147,13 +147,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     // Total order status counts
     this.totalPending = allOrders.filter(
-      (order) => order.status === 'pending'
+      (order) => order.status === 'Pending'
     ).length;
     this.totalShipped = allOrders.filter(
-      (order) => order.status === 'shipped'
+      (order) => order.status === 'Shipped'
     ).length;
     this.totalDelivered = allOrders.filter(
-      (order) => order.status === 'delivered'
+      (order) => order.status === 'Delivered'
     ).length;
 
     // Update chart data

@@ -16,7 +16,7 @@ export interface Order {
     zip: string;
   };
   orderDate: Date;
-  status: 'pending' | 'shipped' | 'delivered';
+  status: 'Pending' | 'Shipped' | 'Delivered';
 }
 
 @Injectable({
@@ -72,7 +72,7 @@ export class OrdersService {
       total,
       shippingAddress,
       orderDate: new Date(),
-      status: 'pending',
+      status: 'Pending',
     };
 
     const orders = this.getOrders();
