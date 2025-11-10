@@ -23,8 +23,8 @@ export class PaymentService {
       key: this.razorpayKey,
       amount: amount * 100, // Razorpay expects amount in paisa (multiply by 100)
       currency: currency,
-      name: 'StepUp E-commerce',
-      description: 'Purchase from StepUp',
+      name: 'StepUp',
+      description: 'Pay to StepUp',
       // order_id: orderId, // Remove order_id for test mode without backend order creation
       handler: onSuccess,
       prefill: {
