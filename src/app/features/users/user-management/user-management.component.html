@@ -12,7 +12,6 @@
               <th>Name</th>
               <th>Email</th>
               <th>Phone</th>
-              <th>Role</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -22,7 +21,6 @@
               <td>{{ user.name }}</td>
               <td>{{ user.email }}</td>
               <td>{{ user.phone }}</td>
-              <td>{{ user.role }}</td>
               <td>{{ user.blocked ? "Blocked" : "Active" }}</td>
               <td>
                 <button class="action-btn view-btn" (click)="viewUser(user)">
