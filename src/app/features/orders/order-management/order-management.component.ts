@@ -77,10 +77,10 @@ export class OrderManagementComponent implements OnInit {
 
   async downloadInvoice(order: Order) {
     try {
-      await this.invoiceService.generateInvoice(order);
-      this.toastr.success('Invoice downloaded successfully!');
+      await this.invoiceService.generateShippingLabel(order);
+      this.toastr.success('Shipping label downloaded successfully!');
     } catch (error) {
-      this.toastr.error('Failed to generate invoice. Please try again.');
+      this.toastr.error('Failed to generate shipping label. Please try again.');
     }
   }
 }
