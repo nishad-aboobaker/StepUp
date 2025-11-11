@@ -19,6 +19,10 @@ export class ProductManagementComponent implements OnInit {
   itemsPerPage: number = 10;
   totalPages: number = 0;
 
+  // Confirmation modal properties
+  showDeleteModal = false;
+  productToDelete: Product | null = null;
+
   constructor(
     private productsService: ProductsService,
     private router: Router
@@ -92,10 +96,22 @@ export class ProductManagementComponent implements OnInit {
   }
 
   deleteProduct(product: Product): void {
-    if (confirm(`Are you sure you want to delete "${product.name}"?`)) {
-      this.productsService.deleteProduct(product.id);
+    this.productToDelete = product;
+    this.showDeleteModal = true;
+  }
+
+  confirmDelete(): void {
+    if (this.productToDelete) {
+      this.productsService.deleteProduct(this.productToDelete.id);
       this.loadProducts(); // Refresh the list and pagination
+      this.productToDelete = null;
     }
+    this.showDeleteModal = false;
+  }
+
+  cancelDelete(): void {
+    this.productToDelete = null;
+    this.showDeleteModal = false;
   }
 
   createProduct(): void {

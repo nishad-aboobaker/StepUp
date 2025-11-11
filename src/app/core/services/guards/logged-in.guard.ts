@@ -15,8 +15,14 @@ export class LoggedInGuard implements CanActivate {
 
   canActivate(): boolean {
     if (this.authService.isAuthenticated()) {
-      this.toastr.info('You are already logged in');
-      this.router.navigate(['/products']);
+      const user = this.authService.getCurrentUser();
+      if (user && user.role === 'admin') {
+        this.toastr.info('You are already logged in as admin');
+        this.router.navigate(['/dashboard']);
+      } else {
+        this.toastr.info('You are already logged in');
+        this.router.navigate(['/products']);
+      }
       return false;
     } else {
       return true;

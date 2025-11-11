@@ -8,6 +8,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ProductManagementComponent } from './product-management/product-management.component';
 import { UpdateProductComponent } from './update-product/update-product.component';
 import { CreateProductComponent } from './create-product/create-product.component';
+import { ComponentsModule } from 'src/app/shared/components/components.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { CreateProductComponent } from './create-product/create-product.componen
     ReactiveFormsModule,
     ProductsRoutingModule,
     SharedModule,
+    ComponentsModule,
   ],
   exports: [ProductListsComponent, ProductDetailsComponent],
 })

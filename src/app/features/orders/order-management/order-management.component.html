@@ -31,9 +31,11 @@
             <div class="order-header">
               <h3>Order #{{ order.id }}</h3>
               <div class="status-controls">
-                <span class="order-status" [class]="'status-' + order.status">{{
-                  order.status
-                }}</span>
+                <span
+                  class="order-status"
+                  [ngClass]="'status-' + order.status"
+                  >{{ order.status }}</span
+                >
                 <select
                   [value]="order.status"
                   (change)="
@@ -42,9 +44,9 @@
                   class="status-select"
                   aria-label="Update order status"
                 >
-                  <option value="pending">Pending</option>
-                  <option value="shipped">Shipped</option>
-                  <option value="delivered">Delivered</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Shipped">Shipped</option>
+                  <option value="Delivered">Delivered</option>
                 </select>
               </div>
             </div>

@@ -125,19 +125,19 @@
   letter-spacing: 0.5px;
 }
 
-.status-pending {
+.status-Pending {
   background: #fff3cd;
   color: #856404;
   border: 1px solid #ffeaa7;
 }
 
-.status-shipped {
+.status-Shipped {
   background: #cce5ff;
   color: #004085;
   border: 1px solid #99d6ff;
 }
 
-.status-delivered {
+.status-Delivered {
   background: #d4edda;
   color: #155724;
   border: 1px solid #a8d5ba;
