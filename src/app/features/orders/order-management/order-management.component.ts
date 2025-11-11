@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrdersService, Order } from '../../../core/services/orders.service';
+import { InvoiceService } from '../../../core/services/invoice.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -20,6 +21,7 @@ export class OrderManagementComponent implements OnInit {
 
   constructor(
     private ordersService: OrdersService,
+    private invoiceService: InvoiceService,
     private toastr: ToastrService
   ) {}
 
@@ -70,6 +72,15 @@ export class OrderManagementComponent implements OnInit {
     } catch (error) {
       console.error('Error updating order status:', error);
       this.toastr.error('An error occurred while updating the order status');
+    }
+  }
+
+  async downloadInvoice(order: Order) {
+    try {
+      await this.invoiceService.generateInvoice(order);
+      this.toastr.success('Invoice downloaded successfully!');
+    } catch (error) {
+      this.toastr.error('Failed to generate invoice. Please try again.');
     }
   }
 }

@@ -215,6 +215,38 @@
   box-shadow: 0 6px 12px rgba(0, 123, 255, 0.4);
 }
 
+.invoice-btn {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  color: #28a745;
+  border: 2px solid #28a745;
+  border-radius: 20px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
+}
+
+.invoice-btn:hover {
+  background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(40, 167, 69, 0.4);
+}
+
+.invoice-btn i {
+  font-size: 0.9rem;
+}
+
+.invoice-btn:active {
+  transform: translateY(0);
+}
+
 @media (max-width: 768px) {
   .orders-container {
     padding: 15px;
@@ -251,5 +283,40 @@
 
   .shipping-info {
     text-align: center;
+  }
+
+  .order-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .invoice-btn {
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+  }
+
+  .invoice-btn:hover {
+    background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.4);
+  }
+
+  .invoice-btn:active {
+    transform: translateY(0);
+  }
+
+  .order-actions {
+    justify-content: center;
   }
 }

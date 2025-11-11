@@ -86,6 +86,12 @@
               </p>
               <p>{{ order.shippingAddress.email }}</p>
             </div>
+
+            <div class="order-actions">
+              <button class="invoice-btn" (click)="downloadInvoice(order)">
+                Generate Invoice
+              </button>
+            </div>
           </div>
         </div>
 

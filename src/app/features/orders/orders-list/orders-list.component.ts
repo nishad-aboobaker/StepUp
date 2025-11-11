@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrdersService, Order } from '../../../core/services/orders.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { InvoiceService } from '../../../core/services/invoice.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -15,6 +16,7 @@ export class OrdersListComponent implements OnInit {
   constructor(
     private ordersService: OrdersService,
     private authService: AuthService,
+    private invoiceService: InvoiceService,
     private router: Router,
     private toastr: ToastrService
   ) {}
@@ -32,5 +34,14 @@ export class OrdersListComponent implements OnInit {
 
   loadOrders() {
     this.orders = this.ordersService.getOrders();
+  }
+
+  async downloadInvoice(order: Order) {
+    try {
+      await this.invoiceService.generateInvoice(order);
+      this.toastr.success('Invoice downloaded successfully!');
+    } catch (error) {
+      this.toastr.error('Failed to generate invoice. Please try again.');
+    }
   }
 }

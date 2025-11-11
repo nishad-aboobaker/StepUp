@@ -44,6 +44,12 @@
         <p>{{ order.shippingAddress.city }}, {{ order.shippingAddress.zip }}</p>
         <p>{{ order.shippingAddress.email }}</p>
       </div>
+
+      <div class="order-actions" *ngIf="order.status === 'Delivered'">
+        <button class="invoice-btn" (click)="downloadInvoice(order)">
+          <i class="fas fa-download"></i> Download Invoice
+        </button>
+      </div>
     </div>
   </div>
 

@@ -336,4 +336,37 @@
   .shipping-info {
     text-align: center;
   }
+
+  .order-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .invoice-btn {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #007bff 0%, #0056cc 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .invoice-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .invoice-btn:active {
+    transform: translateY(0);
+  }
+
+  .order-actions {
+    justify-content: center;
+  }
 }
