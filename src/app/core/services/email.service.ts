@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
 import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmailService {
   // Credentials for the main service
-  private serviceId = 'service_u745apb';
-  private templateIdUpdate = 'template_o5flbfe';
-  private templateIdConfirm = 'template_bje9hhe';
-  private publicKey = 'SWC2-g6JKYPKan4z-';
+  private serviceId = environment.emailjs.serviceId;
+  private templateIdUpdate = environment.emailjs.templateIdUpdate;
+  private templateIdConfirm = environment.emailjs.templateIdConfirm;
+  private publicKey = environment.emailjs.publicKey;
 
   // Credentials for the OTP service
-  private otpServiceId = 'service_yerp24r';
-  private otpTemplateId = 'template_andd5te';
-  private passwordResetTemplateId = 'template_ovkwa08'; // New template for password reset
-  private otpPublicKey = 'uwAwrDG8D6KCg0qZo';
+  private otpServiceId = environment.emailjs.otpServiceId;
+  private otpTemplateId = environment.emailjs.otpTemplateId;
+  private passwordResetTemplateId = environment.emailjs.passwordResetTemplateId;
+  private otpPublicKey = environment.emailjs.otpPublicKey;
 
   constructor() {
     // Initialize EmailJS with the public key for the main service
@@ -111,7 +112,7 @@ export class EmailService {
         this.otpServiceId,
         this.otpTemplateId,
         templateParams,
-		this.otpPublicKey
+        this.otpPublicKey
       );
 
       console.log('OTP email sent successfully:', response);
@@ -136,7 +137,7 @@ export class EmailService {
         this.otpServiceId,
         this.passwordResetTemplateId,
         templateParams,
-		this.otpPublicKey
+        this.otpPublicKey
       );
 
       console.log('Password reset OTP email sent successfully:', response);
@@ -148,7 +149,7 @@ export class EmailService {
   }
 
   // Update EmailJS configuration
-  updateConfig(serviceId: string, templateIdConfirm: string,templateIdUpdate: string, publicKey: string) {
+  updateConfig(serviceId: string, templateIdConfirm: string, templateIdUpdate: string, publicKey: string) {
     this.serviceId = serviceId;
     this.templateIdConfirm = templateIdConfirm;
     this.templateIdUpdate = templateIdUpdate;

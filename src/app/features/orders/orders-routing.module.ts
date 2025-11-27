@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OrdersListComponent } from './orders-list/orders-list.component';
 import { OrderManagementComponent } from './order-management/order-management.component';
-import { AuthGuard } from '../../core/services/guards/auth.guard';
-import { AdminAuthGuard } from '../../core/services/guards/admin-auth.guard';
+import { AuthGuard } from '../../core/guards/auth.guard';
+import { AdminAuthGuard } from '../../core/guards/admin-auth.guard';
 
 const routes: Routes = [
   { path: '', component: OrdersListComponent, canActivate: [AuthGuard] },

@@ -5,7 +5,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { ProductManagementComponent } from './product-management/product-management.component';
 import { UpdateProductComponent } from './update-product/update-product.component';
 import { CreateProductComponent } from './create-product/create-product.component';
-import { AdminAuthGuard } from '../../core/services/guards/admin-auth.guard';
+import { AdminAuthGuard } from '../../core/guards/admin-auth.guard';
 
 const routes: Routes = [
   { path: '', component: ProductListsComponent },

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { LoggedInGuard } from '../../core/services/guards/logged-in.guard';
+import { LoggedInGuard } from '../../core/guards/logged-in.guard';
 
 const routes: Routes = [
   { path: 'signup', component: SignupComponent, canActivate: [LoggedInGuard] },
