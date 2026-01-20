@@ -1,19 +1,17 @@
-
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { EmailService } from './email.service';
+import { HttpClient } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private tempUserData: any;
-
   constructor(
     private router: Router,
     private toastr: ToastrService,
-    private emailService: EmailService
+    private http: HttpClient
   ) {
     this.ensureAdminExists();
   }
@@ -34,7 +32,10 @@ export class AuthService {
     }
   }
 
-  async signupAndSendOtp(userData: any): Promise<boolean> {
+
+
+
+  signup(userData: any): boolean {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     const exists = users.some((u: any) => u.email === userData.email);
 
@@ -43,40 +44,52 @@ export class AuthService {
       return false;
     }
 
-    const otp = Math.floor(1000 + Math.random() * 9000).toString();
-    this.tempUserData = { ...userData, otp };
+    users.push(userData);
+    localStorage.setItem('users', JSON.stringify(users));
 
-    const emailSent = await this.emailService.sendOtpEmail(
-      userData.email,
-      userData.name,
-      otp
-    );
 
-    if (emailSent) {
-      this.toastr.success('OTP sent to your email!');
-      return true;
-    } else {
-      this.toastr.error('Failed to send OTP. Please try again.');
-      return false;
-    }
+
+
+    ////backend connection code ////
+    this.http
+      .post<any>("http://localhost:5000/auth/register",userData)
+      .subscribe({
+        next:(res)=>{
+          console.log("Signup Successful",res);
+          this.toastr.success('Account created!');
+          this.router.navigate(['/auth/signin']);
+        },
+        error:(err)=>{
+          console.log("Signup failed",err);
+           this.toastr.warning(err?.error?.message);
+        }
+      })
+
+
+
+    return true;
   }
 
-  verifyOtpAndRegister(otp: string): boolean {
-    if (this.tempUserData && this.tempUserData.otp === otp) {
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const { otp: _, ...userDataToSave } = this.tempUserData;
-      userDataToSave.role = 'user';
-      users.push(userDataToSave);
-      localStorage.setItem('users', JSON.stringify(users));
-      this.toastr.success('Signup successful!');
-      this.router.navigate(['/auth/signin']);
-      this.tempUserData = null;
-      return true;
-    } else {
-      this.toastr.error('Invalid OTP!');
-      return false;
-    }
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   login(credentials: any): boolean {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
@@ -110,6 +123,19 @@ export class AuthService {
     }
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+  
   private transferGuestCartToUser(user: any): void {
     const guestCartKey = 'cart_items_guest';
     const userCartKey = `cart_items_${user.id || user.email}`;
@@ -172,7 +198,7 @@ export class AuthService {
     }
   }
 
-  async sendPasswordResetOtp(email: string): Promise<boolean> {
+  resetPassword(email: string, password: string): boolean {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     const user = users.find((u: any) => u.email === email);
 
@@ -181,52 +207,10 @@ export class AuthService {
       return false;
     }
 
-    const otp = Math.floor(1000 + Math.random() * 9000).toString();
-    this.tempUserData = { email, otp };
-
-    const emailSent = await this.emailService.sendPasswordResetOtpEmail(
-      email,
-      user.name,
-      otp
-    );
-
-    if (emailSent) {
-      this.toastr.success('OTP sent to your email!');
-      return true;
-    } else {
-      this.toastr.error('Failed to send OTP. Please try again.');
-      return false;
-    }
-  }
-
-  verifyPasswordResetOtp(otp: string): boolean {
-    if (this.tempUserData && this.tempUserData.otp === otp) {
-      return true;
-    } else {
-      this.toastr.error('Invalid OTP!');
-      return false;
-    }
-  }
-
-  resetPassword(password: string): boolean {
-    if (!this.tempUserData) {
-      this.toastr.error('Something went wrong. Please try again.');
-      return false;
-    }
-
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = users.find((u: any) => u.email === this.tempUserData.email);
-
-    if (user) {
-      user.password = password;
-      localStorage.setItem('users', JSON.stringify(users));
-      this.toastr.success('Password reset successful!');
-      this.router.navigate(['/auth/signin']);
-      this.tempUserData = null;
-      return true;
-    } else {
-      this.toastr.error('User not found!');
-      return false;
-    }
+    user.password = password;
+    localStorage.setItem('users', JSON.stringify(users));
+    this.toastr.success('Password reset successful!');
+    this.router.navigate(['/auth/signin']);
+    return true;
   }
 }

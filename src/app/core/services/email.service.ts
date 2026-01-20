@@ -12,12 +12,6 @@ export class EmailService {
   private templateIdConfirm = environment.emailjs.templateIdConfirm;
   private publicKey = environment.emailjs.publicKey;
 
-  // Credentials for the OTP service
-  private otpServiceId = environment.emailjs.otpServiceId;
-  private otpTemplateId = environment.emailjs.otpTemplateId;
-  private passwordResetTemplateId = environment.emailjs.passwordResetTemplateId;
-  private otpPublicKey = environment.emailjs.otpPublicKey;
-
   constructor() {
     // Initialize EmailJS with the public key for the main service
     emailjs.init(this.publicKey);
@@ -45,7 +39,7 @@ export class EmailService {
         shipping_address: shippingAddress,
         order_status: orderStatus,
         subject: `Order Confirmation - ${orderId}`,
-        year: new Date().getFullYear()
+        year: new Date().getFullYear(),
       };
 
       const response: EmailJSResponseStatus = await emailjs.send(
@@ -98,58 +92,15 @@ export class EmailService {
     }
   }
 
-  async sendOtpEmail(userEmail: string, userName: string, otp: string): Promise<boolean> {
-    try {
-      const templateParams = {
-        to_email: userEmail,
-        to_name: userName,
-        otp: otp,
-        subject: 'Your OTP for Sign Up',
-        year: new Date().getFullYear()
-      };
 
-      const response: EmailJSResponseStatus = await emailjs.send(
-        this.otpServiceId,
-        this.otpTemplateId,
-        templateParams,
-        this.otpPublicKey
-      );
-
-      console.log('OTP email sent successfully:', response);
-      return true;
-    } catch (error) {
-      console.error('Failed to send OTP email:', error);
-      return false;
-    }
-  }
-
-  async sendPasswordResetOtpEmail(userEmail: string, userName: string, otp: string): Promise<boolean> {
-    try {
-      const templateParams = {
-        to_email: userEmail,
-        to_name: userName,
-        otp: otp,
-        subject: 'Password Reset OTP',
-        year: new Date().getFullYear()
-      };
-
-      const response: EmailJSResponseStatus = await emailjs.send(
-        this.otpServiceId,
-        this.passwordResetTemplateId,
-        templateParams,
-        this.otpPublicKey
-      );
-
-      console.log('Password reset OTP email sent successfully:', response);
-      return true;
-    } catch (error) {
-      console.error('Failed to send password reset OTP email:', error);
-      return false;
-    }
-  }
 
   // Update EmailJS configuration
-  updateConfig(serviceId: string, templateIdConfirm: string, templateIdUpdate: string, publicKey: string) {
+  updateConfig(
+    serviceId: string,
+    templateIdConfirm: string,
+    templateIdUpdate: string,
+    publicKey: string
+  ) {
     this.serviceId = serviceId;
     this.templateIdConfirm = templateIdConfirm;
     this.templateIdUpdate = templateIdUpdate;

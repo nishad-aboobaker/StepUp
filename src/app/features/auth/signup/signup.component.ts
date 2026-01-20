@@ -14,19 +14,10 @@ export class SignupComponent {
     password: '',
     role: 'user',
   };
-  otp = '';
-  otpSent = false;
 
   constructor(private auth: AuthService) {}
 
-  async onSignup() {
-    const otpSent = await this.auth.signupAndSendOtp(this.user);
-    if (otpSent) {
-      this.otpSent = true;
-    }
-  }
-
-  onVerifyOtp() {
-    this.auth.verifyOtpAndRegister(this.otp);
+  onSignup() {
+    this.auth.signup(this.user);
   }
 }

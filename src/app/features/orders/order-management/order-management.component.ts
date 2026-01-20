@@ -56,15 +56,7 @@ export class OrderManagementComponent implements OnInit {
         newStatus
       );
       if (result.updated) {
-        if (result.emailSent) {
-          this.toastr.success(
-            'Order status updated successfully! Email notification sent to customer.'
-          );
-        } else {
-          this.toastr.warning(
-            'Order status updated successfully, but email notification failed. Please check EmailJS configuration.'
-          );
-        }
+        this.toastr.success('Order status updated successfully!');
         this.loadAllOrders(); // Refresh the list
       } else {
         this.toastr.error('Failed to update order status');

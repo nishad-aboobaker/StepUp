@@ -4,15 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 import { FeaturesRoutingModule } from './features-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { UserManagementComponent } from './users/user-management/user-management.component';
-import { UserDetailComponent } from './users/user-detail/user-detail.component';
 
 @NgModule({
-  declarations: [
-    UserManagementComponent,
-    UserDetailComponent
-  ],
+  declarations: [],
   imports: [CommonModule, FormsModule, FeaturesRoutingModule, SharedModule],
   exports: [FormsModule],
 })
-export class FeaturesModule {}
+export class FeaturesModule { }
